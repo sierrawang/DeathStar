@@ -14,6 +14,7 @@
 #include <string>
 
 #include "../../gen-cpp/SocialGraphService.h"
+#include "../../gen-cpp/UserStorageService.h"
 #include "../../gen-cpp/UserService.h"
 #include "../../gen-cpp/social_network_types.h"
 #include "../../third_party/PicoSHA2/picosha2.h"
@@ -71,6 +72,7 @@ class UserHandler : public UserServiceIf {
  public:
   UserHandler(std::mutex *, const std::string &, const std::string &,
               memcached_pool_st *, mongoc_client_pool_t *,
+              ClientPool<ThriftClient<UserStorageServiceClient>> *,
               ClientPool<ThriftClient<SocialGraphServiceClient>> *);
   ~UserHandler() override = default;
   void RegisterUser(int64_t, const std::string &, const std::string &,
@@ -98,12 +100,15 @@ class UserHandler : public UserServiceIf {
   memcached_pool_st *_memcached_client_pool;
   mongoc_client_pool_t *_mongodb_client_pool;
   ClientPool<ThriftClient<SocialGraphServiceClient>> *_social_graph_client_pool;
+  ClientPool<ThriftClient<UserStorageServiceClient>> *_user_storage_client_pool;
 };
 
 UserHandler::UserHandler(std::mutex *thread_lock, const std::string &machine_id,
                          const std::string &secret,
                          memcached_pool_st *memcached_client_pool,
                          mongoc_client_pool_t *mongodb_client_pool,
+                         ClientPool<ThriftClient<UserStorageServiceClient>>
+                             *user_storage_client_pool,
                          ClientPool<ThriftClient<SocialGraphServiceClient>>
                              *social_graph_client_pool) {
   _thread_lock = thread_lock;
@@ -112,6 +117,7 @@ UserHandler::UserHandler(std::mutex *thread_lock, const std::string &machine_id,
   _mongodb_client_pool = mongodb_client_pool;
   _secret = secret;
   _social_graph_client_pool = social_graph_client_pool;
+  _user_storage_client_pool = user_storage_client_pool;
 }
 
 void UserHandler::RegisterUserWithId(

@@ -40,6 +40,13 @@ int main(int argc, char *argv[]) {
   int social_graph_keepalive =
       config_json["social-graph-service"]["keepalive_ms"];
 
+  std::string user_storage_addr = config_json["user-storage-service"]["addr"];
+  int user_storage_port = config_json["user-storage-service"]["port"];
+  int user_storage_conns = config_json["user-storage-service"]["connections"];
+  int user_storage_timeout = config_json["user-storage-service"]["timeout_ms"];
+  int user_storage_keepalive =
+      config_json["user-storage-service"]["keepalive_ms"];
+
   int mongodb_conns = config_json["user-mongodb"]["connections"];
   int mongodb_timeout = config_json["user-mongodb"]["timeout_ms"];
 
@@ -68,6 +75,10 @@ int main(int argc, char *argv[]) {
       "social-graph", social_graph_addr, social_graph_port, 0,
       social_graph_conns, social_graph_timeout, social_graph_keepalive, config_json);
 
+  ClientPool<ThriftClient<UserStorageServiceClient>> user_storage_client_pool(
+      "user-storage", user_storage_addr, user_storage_port, 0,
+      user_storage_conns, user_storage_timeout, user_storage_keepalive, config_json);
+
   mongoc_client_t *mongodb_client = mongoc_client_pool_pop(mongodb_client_pool);
   if (!mongodb_client) {
     LOG(fatal) << "Failed to pop mongoc client";
@@ -87,7 +98,7 @@ int main(int argc, char *argv[]) {
   TThreadedServer server(
       std::make_shared<UserServiceProcessor>(std::make_shared<UserHandler>(
           &thread_lock, machine_id, secret, memcached_client_pool,
-          mongodb_client_pool, &social_graph_client_pool)),
+          mongodb_client_pool, &user_storage_client_pool, &social_graph_client_pool)),
       server_socket,
       std::make_shared<TFramedTransportFactory>(),
       std::make_shared<TBinaryProtocolFactory>());

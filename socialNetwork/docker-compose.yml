@@ -165,6 +165,14 @@ services:
     #   - 27023:27017
     restart: always
 
+  user-storage-service:
+    image: yg397/social-network-microservices:latest
+    hostname: user-storage-service
+    restart: always
+    entrypoint: UserStorageService
+    volumes:
+      - ./config:/social-network-microservices/config
+
   media-service:
     image: yg397/social-network-microservices:latest
     hostname: media-service

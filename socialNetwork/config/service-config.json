@@ -1,4 +1,11 @@
 {
+  "user-storage-service": {
+    "keepalive_ms": 10000,
+    "addr": "user-storage-service",
+    "timeout_ms": 10000,
+    "port": 9090,
+    "connections": 512
+  },
   "social-graph-mongodb": {
     "keepalive_ms": 10000,
     "addr": "social-graph-mongodb",

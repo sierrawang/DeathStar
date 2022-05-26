@@ -135,6 +135,15 @@ service UserService {
   ) throws (1: ServiceException se)
 }
 
+service UserStorageService {
+  void WriteUser(
+      1: User user
+  ) throws (1: ServiceException se)
+  User ReadUser(
+      1: i64 user_id
+  ) throws (1: ServiceException se)
+}
+
 service ComposePostService {
   void ComposePost(
     1: i64 req_id,

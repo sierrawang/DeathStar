@@ -27,11 +27,13 @@ private:
 };
 
 void UserStorageHandler::WriteUser(const User& user) {
+    LOG(debug) << "got WriteUser call with user_id = " << user.user_id;
     assert(user.user_id != 0);
     m_map[user.user_id] = user;
 }
 
 void UserStorageHandler::ReadUser(User& _return, const int64_t user_id) {
+    LOG(debug) << "got ReadUser call with user_id = " << user_id;
     try {
         _return = m_map.at(user_id);
     } catch (const std::out_of_range& e) {

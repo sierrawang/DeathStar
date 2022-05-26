@@ -168,6 +168,8 @@ services:
   user-storage-service:
     image: yg397/social-network-microservices:latest
     hostname: user-storage-service
+    ports:
+      - 10011:9090
     restart: always
     entrypoint: UserStorageService
     volumes:

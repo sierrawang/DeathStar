@@ -142,6 +142,9 @@ service UserStorageService {
   User ReadUser(
       1: i64 user_id
   ) throws (1: ServiceException se)
+  User FindUser(
+      1: string username
+  ) throws (1: ServiceException se)
 }
 
 service ComposePostService {

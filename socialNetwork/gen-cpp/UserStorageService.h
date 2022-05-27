@@ -24,6 +24,7 @@ class UserStorageServiceIf {
   virtual ~UserStorageServiceIf() {}
   virtual void WriteUser(const User& user) = 0;
   virtual void ReadUser(User& _return, const int64_t user_id) = 0;
+  virtual void FindUser(User& _return, const std::string& username) = 0;
 };
 
 class UserStorageServiceIfFactory {
@@ -57,6 +58,9 @@ class UserStorageServiceNull : virtual public UserStorageServiceIf {
     return;
   }
   void ReadUser(User& /* _return */, const int64_t /* user_id */) override {
+    return;
+  }
+  void FindUser(User& /* _return */, const std::string& /* username */) override {
     return;
   }
 };
@@ -278,6 +282,119 @@ class UserStorageService_ReadUser_presult {
 
 };
 
+typedef struct _UserStorageService_FindUser_args__isset {
+  _UserStorageService_FindUser_args__isset() : username(false) {}
+  bool username :1;
+} _UserStorageService_FindUser_args__isset;
+
+class UserStorageService_FindUser_args {
+ public:
+
+  UserStorageService_FindUser_args(const UserStorageService_FindUser_args&);
+  UserStorageService_FindUser_args& operator=(const UserStorageService_FindUser_args&);
+  UserStorageService_FindUser_args() noexcept
+                                   : username() {
+  }
+
+  virtual ~UserStorageService_FindUser_args() noexcept;
+  std::string username;
+
+  _UserStorageService_FindUser_args__isset __isset;
+
+  void __set_username(const std::string& val);
+
+  bool operator == (const UserStorageService_FindUser_args & rhs) const
+  {
+    if (!(username == rhs.username))
+      return false;
+    return true;
+  }
+  bool operator != (const UserStorageService_FindUser_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const UserStorageService_FindUser_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class UserStorageService_FindUser_pargs {
+ public:
+
+
+  virtual ~UserStorageService_FindUser_pargs() noexcept;
+  const std::string* username;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _UserStorageService_FindUser_result__isset {
+  _UserStorageService_FindUser_result__isset() : success(false), se(false) {}
+  bool success :1;
+  bool se :1;
+} _UserStorageService_FindUser_result__isset;
+
+class UserStorageService_FindUser_result {
+ public:
+
+  UserStorageService_FindUser_result(const UserStorageService_FindUser_result&);
+  UserStorageService_FindUser_result& operator=(const UserStorageService_FindUser_result&);
+  UserStorageService_FindUser_result() noexcept {
+  }
+
+  virtual ~UserStorageService_FindUser_result() noexcept;
+  User success;
+  ServiceException se;
+
+  _UserStorageService_FindUser_result__isset __isset;
+
+  void __set_success(const User& val);
+
+  void __set_se(const ServiceException& val);
+
+  bool operator == (const UserStorageService_FindUser_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(se == rhs.se))
+      return false;
+    return true;
+  }
+  bool operator != (const UserStorageService_FindUser_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const UserStorageService_FindUser_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _UserStorageService_FindUser_presult__isset {
+  _UserStorageService_FindUser_presult__isset() : success(false), se(false) {}
+  bool success :1;
+  bool se :1;
+} _UserStorageService_FindUser_presult__isset;
+
+class UserStorageService_FindUser_presult {
+ public:
+
+
+  virtual ~UserStorageService_FindUser_presult() noexcept;
+  User* success;
+  ServiceException se;
+
+  _UserStorageService_FindUser_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class UserStorageServiceClient : virtual public UserStorageServiceIf {
  public:
   UserStorageServiceClient(std::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -309,6 +426,9 @@ class UserStorageServiceClient : virtual public UserStorageServiceIf {
   void ReadUser(User& _return, const int64_t user_id) override;
   void send_ReadUser(const int64_t user_id);
   void recv_ReadUser(User& _return);
+  void FindUser(User& _return, const std::string& username) override;
+  void send_FindUser(const std::string& username);
+  void recv_FindUser(User& _return);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -326,11 +446,13 @@ class UserStorageServiceProcessor : public ::apache::thrift::TDispatchProcessor 
   ProcessMap processMap_;
   void process_WriteUser(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_ReadUser(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_FindUser(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   UserStorageServiceProcessor(::std::shared_ptr<UserStorageServiceIf> iface) :
     iface_(iface) {
     processMap_["WriteUser"] = &UserStorageServiceProcessor::process_WriteUser;
     processMap_["ReadUser"] = &UserStorageServiceProcessor::process_ReadUser;
+    processMap_["FindUser"] = &UserStorageServiceProcessor::process_FindUser;
   }
 
   virtual ~UserStorageServiceProcessor() {}
@@ -378,6 +500,16 @@ class UserStorageServiceMultiface : virtual public UserStorageServiceIf {
     return;
   }
 
+  void FindUser(User& _return, const std::string& username) override {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->FindUser(_return, username);
+    }
+    ifaces_[i]->FindUser(_return, username);
+    return;
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -416,6 +548,9 @@ class UserStorageServiceConcurrentClient : virtual public UserStorageServiceIf {
   void ReadUser(User& _return, const int64_t user_id) override;
   int32_t send_ReadUser(const int64_t user_id);
   void recv_ReadUser(User& _return, const int32_t seqid);
+  void FindUser(User& _return, const std::string& username) override;
+  int32_t send_FindUser(const std::string& username);
+  void recv_FindUser(User& _return, const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

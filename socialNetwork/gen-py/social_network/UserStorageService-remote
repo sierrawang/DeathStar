@@ -26,6 +26,7 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('Functions:')
     print('  void WriteUser(User user)')
     print('  User ReadUser(i64 user_id)')
+    print('  User FindUser(string username)')
     print('')
     sys.exit(0)
 
@@ -116,6 +117,12 @@ elif cmd == 'ReadUser':
         print('ReadUser requires 1 args')
         sys.exit(1)
     pp.pprint(client.ReadUser(eval(args[0]),))
+
+elif cmd == 'FindUser':
+    if len(args) != 1:
+        print('FindUser requires 1 args')
+        sys.exit(1)
+    pp.pprint(client.FindUser(args[0],))
 
 else:
     print('Unrecognized method %s' % cmd)

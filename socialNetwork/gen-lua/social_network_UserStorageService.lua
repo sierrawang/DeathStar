@@ -72,6 +72,39 @@ function UserStorageServiceClient:recv_ReadUser(user_id)
   end
   error(TApplicationException:new{errorCode = TApplicationException.MISSING_RESULT})
 end
+
+function UserStorageServiceClient:FindUser(username)
+  self:send_FindUser(username)
+  return self:recv_FindUser(username)
+end
+
+function UserStorageServiceClient:send_FindUser(username)
+  self.oprot:writeMessageBegin('FindUser', TMessageType.CALL, self._seqid)
+  local args = FindUser_args:new{}
+  args.username = username
+  args:write(self.oprot)
+  self.oprot:writeMessageEnd()
+  self.oprot.trans:flush()
+end
+
+function UserStorageServiceClient:recv_FindUser(username)
+  local fname, mtype, rseqid = self.iprot:readMessageBegin()
+  if mtype == TMessageType.EXCEPTION then
+    local x = TApplicationException:new{}
+    x:read(self.iprot)
+    self.iprot:readMessageEnd()
+    error(x)
+  end
+  local result = FindUser_result:new{}
+  result:read(self.iprot)
+  self.iprot:readMessageEnd()
+  if result.success ~= nil then
+    return result.success
+  elseif result.se then
+    error(result.se)
+  end
+  error(TApplicationException:new{errorCode = TApplicationException.MISSING_RESULT})
+end
 UserStorageServiceIface = __TObject:new{
   __type = 'UserStorageServiceIface'
 }
@@ -141,6 +174,28 @@ function UserStorageServiceProcessor:process_ReadUser(seqid, iprot, oprot, serve
     result.success = res
   end
   oprot:writeMessageBegin('ReadUser', reply_type, seqid)
+  result:write(oprot)
+  oprot:writeMessageEnd()
+  oprot.trans:flush()
+  return status, res
+end
+
+function UserStorageServiceProcessor:process_FindUser(seqid, iprot, oprot, server_ctx)
+  local args = FindUser_args:new{}
+  local reply_type = TMessageType.REPLY
+  args:read(iprot)
+  iprot:readMessageEnd()
+  local result = FindUser_result:new{}
+  local status, res = pcall(self.handler.FindUser, self.handler, args.username)
+  if not status then
+    reply_type = TMessageType.EXCEPTION
+    result = TApplicationException:new{message = res}
+  elseif ttype(res) == 'ServiceException' then
+    result.se = res
+  else
+    result.success = res
+  end
+  oprot:writeMessageBegin('FindUser', reply_type, seqid)
   result:write(oprot)
   oprot:writeMessageEnd()
   oprot.trans:flush()
@@ -291,6 +346,90 @@ end
 
 function ReadUser_result:write(oprot)
   oprot:writeStructBegin('ReadUser_result')
+  if self.success ~= nil then
+    oprot:writeFieldBegin('success', TType.STRUCT, 0)
+    self.success:write(oprot)
+    oprot:writeFieldEnd()
+  end
+  if self.se ~= nil then
+    oprot:writeFieldBegin('se', TType.STRUCT, 1)
+    self.se:write(oprot)
+    oprot:writeFieldEnd()
+  end
+  oprot:writeFieldStop()
+  oprot:writeStructEnd()
+end
+
+FindUser_args = __TObject:new{
+  username
+}
+
+function FindUser_args:read(iprot)
+  iprot:readStructBegin()
+  while true do
+    local fname, ftype, fid = iprot:readFieldBegin()
+    if ftype == TType.STOP then
+      break
+    elseif fid == 1 then
+      if ftype == TType.STRING then
+        self.username = iprot:readString()
+      else
+        iprot:skip(ftype)
+      end
+    else
+      iprot:skip(ftype)
+    end
+    iprot:readFieldEnd()
+  end
+  iprot:readStructEnd()
+end
+
+function FindUser_args:write(oprot)
+  oprot:writeStructBegin('FindUser_args')
+  if self.username ~= nil then
+    oprot:writeFieldBegin('username', TType.STRING, 1)
+    oprot:writeString(self.username)
+    oprot:writeFieldEnd()
+  end
+  oprot:writeFieldStop()
+  oprot:writeStructEnd()
+end
+
+FindUser_result = __TObject:new{
+  success,
+  se
+}
+
+function FindUser_result:read(iprot)
+  iprot:readStructBegin()
+  while true do
+    local fname, ftype, fid = iprot:readFieldBegin()
+    if ftype == TType.STOP then
+      break
+    elseif fid == 0 then
+      if ftype == TType.STRUCT then
+        self.success = User:new{}
+        self.success:read(iprot)
+      else
+        iprot:skip(ftype)
+      end
+    elseif fid == 1 then
+      if ftype == TType.STRUCT then
+        self.se = ServiceException:new{}
+        self.se:read(iprot)
+      else
+        iprot:skip(ftype)
+      end
+    else
+      iprot:skip(ftype)
+    end
+    iprot:readFieldEnd()
+  end
+  iprot:readStructEnd()
+end
+
+function FindUser_result:write(oprot)
+  oprot:writeStructBegin('FindUser_result')
   if self.success ~= nil then
     oprot:writeFieldBegin('success', TType.STRUCT, 0)
     self.success:write(oprot)

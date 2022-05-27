@@ -30,6 +30,11 @@ class UserStorageServiceHandler : virtual public UserStorageServiceIf {
     printf("ReadUser\n");
   }
 
+  void FindUser(User& _return, const std::string& username) {
+    // Your implementation goes here
+    printf("FindUser\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

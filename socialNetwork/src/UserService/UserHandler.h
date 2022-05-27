@@ -1,11 +1,6 @@
 #ifndef SOCIAL_NETWORK_MICROSERVICES_USERHANDLER_H
 #define SOCIAL_NETWORK_MICROSERVICES_USERHANDLER_H
 
-#include <bson/bson.h>
-#include <libmemcached/memcached.h>
-#include <libmemcached/util.h>
-#include <mongoc.h>
-
 #include <iomanip>
 #include <iostream>
 #include <jwt/jwt.hpp>
@@ -71,7 +66,6 @@ std::string GenRandomString(const int len) {
 class UserHandler : public UserServiceIf {
  public:
   UserHandler(std::mutex *, const std::string &, const std::string &,
-              memcached_pool_st *, mongoc_client_pool_t *,
               ClientPool<ThriftClient<UserStorageServiceClient>> *,
               ClientPool<ThriftClient<SocialGraphServiceClient>> *);
   ~UserHandler() override = default;
@@ -97,24 +91,18 @@ class UserHandler : public UserServiceIf {
   std::string _machine_id;
   std::string _secret;
   std::mutex *_thread_lock;
-  memcached_pool_st *_memcached_client_pool;
-  mongoc_client_pool_t *_mongodb_client_pool;
   ClientPool<ThriftClient<SocialGraphServiceClient>> *_social_graph_client_pool;
   ClientPool<ThriftClient<UserStorageServiceClient>> *_user_storage_client_pool;
 };
 
 UserHandler::UserHandler(std::mutex *thread_lock, const std::string &machine_id,
                          const std::string &secret,
-                         memcached_pool_st *memcached_client_pool,
-                         mongoc_client_pool_t *mongodb_client_pool,
                          ClientPool<ThriftClient<UserStorageServiceClient>>
                              *user_storage_client_pool,
                          ClientPool<ThriftClient<SocialGraphServiceClient>>
                              *social_graph_client_pool) {
   _thread_lock = thread_lock;
   _machine_id = machine_id;
-  _memcached_client_pool = memcached_client_pool;
-  _mongodb_client_pool = mongodb_client_pool;
   _secret = secret;
   _social_graph_client_pool = social_graph_client_pool;
   _user_storage_client_pool = user_storage_client_pool;
@@ -395,9 +383,6 @@ int64_t UserHandler::GetUserId(
     throw se;
   }
   auto user_storage_client = user_storage_client_wrapper->GetClient();
-
-  bson_t *query = bson_new();
-  BSON_APPEND_UTF8(query, "username", username.c_str());
 
   auto find_span = opentracing::Tracer::Global()->StartSpan(
       "user_mongo_find_client", {opentracing::ChildOf(&span->context())});

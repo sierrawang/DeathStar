@@ -5,8 +5,6 @@
 #include <thrift/transport/TServerSocket.h>
 
 #include "../utils.h"
-#include "../utils_memcached.h"
-#include "../utils_mongodb.h"
 #include "../utils_thrift.h"
 #include "UserHandler.h"
 
@@ -47,21 +45,6 @@ int main(int argc, char *argv[]) {
   int user_storage_keepalive =
       config_json["user-storage-service"]["keepalive_ms"];
 
-  int mongodb_conns = config_json["user-mongodb"]["connections"];
-  int mongodb_timeout = config_json["user-mongodb"]["timeout_ms"];
-
-  int memcached_conns = config_json["user-memcached"]["connections"];
-  int memcached_timeout = config_json["user-memcached"]["timeout_ms"];
-
-  memcached_pool_st *memcached_client_pool =
-      init_memcached_client_pool(config_json, "user", 32, memcached_conns);
-  mongoc_client_pool_t *mongodb_client_pool =
-      init_mongodb_client_pool(config_json, "user", mongodb_conns);
-
-  if (memcached_client_pool == nullptr || mongodb_client_pool == nullptr) {
-    return EXIT_FAILURE;
-  }
-
   std::string netif = config_json["user-service"]["netif"];
   std::string machine_id = GetMachineId(netif);
   if (machine_id == "") {
@@ -79,26 +62,12 @@ int main(int argc, char *argv[]) {
       "user-storage", user_storage_addr, user_storage_port, 0,
       user_storage_conns, user_storage_timeout, user_storage_keepalive, config_json);
 
-  mongoc_client_t *mongodb_client = mongoc_client_pool_pop(mongodb_client_pool);
-  if (!mongodb_client) {
-    LOG(fatal) << "Failed to pop mongoc client";
-    return EXIT_FAILURE;
-  }
-  bool r = false;
-  while (!r) {
-    r = CreateIndex(mongodb_client, "user", "user_id", true);
-    if (!r) {
-      LOG(error) << "Failed to create mongodb index, try again";
-      sleep(1);
-    }
-  }
-  mongoc_client_pool_push(mongodb_client_pool, mongodb_client);
   std::shared_ptr<TServerSocket> server_socket = get_server_socket(config_json, "0.0.0.0", port);
 
   TThreadedServer server(
       std::make_shared<UserServiceProcessor>(std::make_shared<UserHandler>(
-          &thread_lock, machine_id, secret, memcached_client_pool,
-          mongodb_client_pool, &user_storage_client_pool, &social_graph_client_pool)),
+          &thread_lock, machine_id, secret, &user_storage_client_pool,
+          &social_graph_client_pool)),
       server_socket,
       std::make_shared<TFramedTransportFactory>(),
       std::make_shared<TBinaryProtocolFactory>());

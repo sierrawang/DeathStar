@@ -38,6 +38,16 @@ def login():
   transport.close()
 
 if __name__ == '__main__':
+
+  print("Trying register()")
+  try:
+    register()
+  except ServiceException as se:
+    print('%s' % se.message)
+  except Thrift.TException as tx:
+    print('%s' % tx.message)
+
+  print("Trying login()")
   try:
     login()
   except ServiceException as se:

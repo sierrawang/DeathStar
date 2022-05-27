@@ -21,6 +21,7 @@ def write_then_read():
   client.WriteUser(user)
   print(client.ReadUser(1))
   print(client.ReadUser(5))
+  print(client.FindUser("first_name_1"))
   transport.close()
 
 if __name__ == '__main__':

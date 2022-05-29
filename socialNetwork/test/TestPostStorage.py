@@ -17,7 +17,7 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 def store_post():
-  socket = TSocket.TSocket("localhost", 9090)
+  socket = TSocket.TSocket("localhost", 10002)
   transport = TTransport.TFramedTransport(socket)
   protocol = TBinaryProtocol.TBinaryProtocol(transport)
   client = PostStorageService.Client(protocol)
@@ -25,8 +25,8 @@ def store_post():
   transport.open()
   req_id = random.getrandbits(63)
   text = "HelloWorld"
-  media_0 = Media(media_id=0, media_type=MediaType.PHOTO)
-  media_1 = Media(media_id=1, media_type=MediaType.PHOTO)
+  media_0 = Media(media_id=0, media_type="PHOTO")
+  media_1 = Media(media_id=1, media_type="PHOTO")
   media = [media_0, media_1]
   post_id = 0
   post_type = PostType.POST
@@ -45,7 +45,7 @@ def store_post():
   transport.close()
 
 def read_post():
-  socket = TSocket.TSocket("localhost", 9090)
+  socket = TSocket.TSocket("localhost", 10002)
   transport = TTransport.TFramedTransport(socket)
   protocol = TBinaryProtocol.TBinaryProtocol(transport)
   client = PostStorageService.Client(protocol)
@@ -57,7 +57,7 @@ def read_post():
   print(post)
 
 def read_posts():
-  socket = TSocket.TSocket("localhost", 9090)
+  socket = TSocket.TSocket("localhost", 10002)
   transport = TTransport.TFramedTransport(socket)
   protocol = TBinaryProtocol.TBinaryProtocol(transport)
   client = PostStorageService.Client(protocol)
@@ -71,6 +71,8 @@ def read_posts():
 
 if __name__ == '__main__':
   try:
+    store_post()
+    read_post()
     read_posts()
   except ServiceException as se:
     print('%s' % se.message)

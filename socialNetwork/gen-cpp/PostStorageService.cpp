@@ -54,17 +54,17 @@ uint32_t PostStorageService_StorePost_args::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size145;
-            ::apache::thrift::protocol::TType _ktype146;
-            ::apache::thrift::protocol::TType _vtype147;
-            xfer += iprot->readMapBegin(_ktype146, _vtype147, _size145);
-            uint32_t _i149;
-            for (_i149 = 0; _i149 < _size145; ++_i149)
+            uint32_t _size156;
+            ::apache::thrift::protocol::TType _ktype157;
+            ::apache::thrift::protocol::TType _vtype158;
+            xfer += iprot->readMapBegin(_ktype157, _vtype158, _size156);
+            uint32_t _i160;
+            for (_i160 = 0; _i160 < _size156; ++_i160)
             {
-              std::string _key150;
-              xfer += iprot->readString(_key150);
-              std::string& _val151 = this->carrier[_key150];
-              xfer += iprot->readString(_val151);
+              std::string _key161;
+              xfer += iprot->readString(_key161);
+              std::string& _val162 = this->carrier[_key161];
+              xfer += iprot->readString(_val162);
             }
             xfer += iprot->readMapEnd();
           }
@@ -101,11 +101,11 @@ uint32_t PostStorageService_StorePost_args::write(::apache::thrift::protocol::TP
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter152;
-    for (_iter152 = this->carrier.begin(); _iter152 != this->carrier.end(); ++_iter152)
+    std::map<std::string, std::string> ::const_iterator _iter163;
+    for (_iter163 = this->carrier.begin(); _iter163 != this->carrier.end(); ++_iter163)
     {
-      xfer += oprot->writeString(_iter152->first);
-      xfer += oprot->writeString(_iter152->second);
+      xfer += oprot->writeString(_iter163->first);
+      xfer += oprot->writeString(_iter163->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -137,11 +137,11 @@ uint32_t PostStorageService_StorePost_pargs::write(::apache::thrift::protocol::T
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter153;
-    for (_iter153 = (*(this->carrier)).begin(); _iter153 != (*(this->carrier)).end(); ++_iter153)
+    std::map<std::string, std::string> ::const_iterator _iter164;
+    for (_iter164 = (*(this->carrier)).begin(); _iter164 != (*(this->carrier)).end(); ++_iter164)
     {
-      xfer += oprot->writeString(_iter153->first);
-      xfer += oprot->writeString(_iter153->second);
+      xfer += oprot->writeString(_iter164->first);
+      xfer += oprot->writeString(_iter164->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -306,17 +306,17 @@ uint32_t PostStorageService_ReadPost_args::read(::apache::thrift::protocol::TPro
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size154;
-            ::apache::thrift::protocol::TType _ktype155;
-            ::apache::thrift::protocol::TType _vtype156;
-            xfer += iprot->readMapBegin(_ktype155, _vtype156, _size154);
-            uint32_t _i158;
-            for (_i158 = 0; _i158 < _size154; ++_i158)
+            uint32_t _size165;
+            ::apache::thrift::protocol::TType _ktype166;
+            ::apache::thrift::protocol::TType _vtype167;
+            xfer += iprot->readMapBegin(_ktype166, _vtype167, _size165);
+            uint32_t _i169;
+            for (_i169 = 0; _i169 < _size165; ++_i169)
             {
-              std::string _key159;
-              xfer += iprot->readString(_key159);
-              std::string& _val160 = this->carrier[_key159];
-              xfer += iprot->readString(_val160);
+              std::string _key170;
+              xfer += iprot->readString(_key170);
+              std::string& _val171 = this->carrier[_key170];
+              xfer += iprot->readString(_val171);
             }
             xfer += iprot->readMapEnd();
           }
@@ -353,11 +353,11 @@ uint32_t PostStorageService_ReadPost_args::write(::apache::thrift::protocol::TPr
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter161;
-    for (_iter161 = this->carrier.begin(); _iter161 != this->carrier.end(); ++_iter161)
+    std::map<std::string, std::string> ::const_iterator _iter172;
+    for (_iter172 = this->carrier.begin(); _iter172 != this->carrier.end(); ++_iter172)
     {
-      xfer += oprot->writeString(_iter161->first);
-      xfer += oprot->writeString(_iter161->second);
+      xfer += oprot->writeString(_iter172->first);
+      xfer += oprot->writeString(_iter172->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -389,11 +389,11 @@ uint32_t PostStorageService_ReadPost_pargs::write(::apache::thrift::protocol::TP
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter162;
-    for (_iter162 = (*(this->carrier)).begin(); _iter162 != (*(this->carrier)).end(); ++_iter162)
+    std::map<std::string, std::string> ::const_iterator _iter173;
+    for (_iter173 = (*(this->carrier)).begin(); _iter173 != (*(this->carrier)).end(); ++_iter173)
     {
-      xfer += oprot->writeString(_iter162->first);
-      xfer += oprot->writeString(_iter162->second);
+      xfer += oprot->writeString(_iter173->first);
+      xfer += oprot->writeString(_iter173->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -570,14 +570,14 @@ uint32_t PostStorageService_ReadPosts_args::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->post_ids.clear();
-            uint32_t _size163;
-            ::apache::thrift::protocol::TType _etype166;
-            xfer += iprot->readListBegin(_etype166, _size163);
-            this->post_ids.resize(_size163);
-            uint32_t _i167;
-            for (_i167 = 0; _i167 < _size163; ++_i167)
+            uint32_t _size174;
+            ::apache::thrift::protocol::TType _etype177;
+            xfer += iprot->readListBegin(_etype177, _size174);
+            this->post_ids.resize(_size174);
+            uint32_t _i178;
+            for (_i178 = 0; _i178 < _size174; ++_i178)
             {
-              xfer += iprot->readI64(this->post_ids[_i167]);
+              xfer += iprot->readI64(this->post_ids[_i178]);
             }
             xfer += iprot->readListEnd();
           }
@@ -590,17 +590,17 @@ uint32_t PostStorageService_ReadPosts_args::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size168;
-            ::apache::thrift::protocol::TType _ktype169;
-            ::apache::thrift::protocol::TType _vtype170;
-            xfer += iprot->readMapBegin(_ktype169, _vtype170, _size168);
-            uint32_t _i172;
-            for (_i172 = 0; _i172 < _size168; ++_i172)
+            uint32_t _size179;
+            ::apache::thrift::protocol::TType _ktype180;
+            ::apache::thrift::protocol::TType _vtype181;
+            xfer += iprot->readMapBegin(_ktype180, _vtype181, _size179);
+            uint32_t _i183;
+            for (_i183 = 0; _i183 < _size179; ++_i183)
             {
-              std::string _key173;
-              xfer += iprot->readString(_key173);
-              std::string& _val174 = this->carrier[_key173];
-              xfer += iprot->readString(_val174);
+              std::string _key184;
+              xfer += iprot->readString(_key184);
+              std::string& _val185 = this->carrier[_key184];
+              xfer += iprot->readString(_val185);
             }
             xfer += iprot->readMapEnd();
           }
@@ -633,10 +633,10 @@ uint32_t PostStorageService_ReadPosts_args::write(::apache::thrift::protocol::TP
   xfer += oprot->writeFieldBegin("post_ids", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->post_ids.size()));
-    std::vector<int64_t> ::const_iterator _iter175;
-    for (_iter175 = this->post_ids.begin(); _iter175 != this->post_ids.end(); ++_iter175)
+    std::vector<int64_t> ::const_iterator _iter186;
+    for (_iter186 = this->post_ids.begin(); _iter186 != this->post_ids.end(); ++_iter186)
     {
-      xfer += oprot->writeI64((*_iter175));
+      xfer += oprot->writeI64((*_iter186));
     }
     xfer += oprot->writeListEnd();
   }
@@ -645,11 +645,11 @@ uint32_t PostStorageService_ReadPosts_args::write(::apache::thrift::protocol::TP
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter176;
-    for (_iter176 = this->carrier.begin(); _iter176 != this->carrier.end(); ++_iter176)
+    std::map<std::string, std::string> ::const_iterator _iter187;
+    for (_iter187 = this->carrier.begin(); _iter187 != this->carrier.end(); ++_iter187)
     {
-      xfer += oprot->writeString(_iter176->first);
-      xfer += oprot->writeString(_iter176->second);
+      xfer += oprot->writeString(_iter187->first);
+      xfer += oprot->writeString(_iter187->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -677,10 +677,10 @@ uint32_t PostStorageService_ReadPosts_pargs::write(::apache::thrift::protocol::T
   xfer += oprot->writeFieldBegin("post_ids", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>((*(this->post_ids)).size()));
-    std::vector<int64_t> ::const_iterator _iter177;
-    for (_iter177 = (*(this->post_ids)).begin(); _iter177 != (*(this->post_ids)).end(); ++_iter177)
+    std::vector<int64_t> ::const_iterator _iter188;
+    for (_iter188 = (*(this->post_ids)).begin(); _iter188 != (*(this->post_ids)).end(); ++_iter188)
     {
-      xfer += oprot->writeI64((*_iter177));
+      xfer += oprot->writeI64((*_iter188));
     }
     xfer += oprot->writeListEnd();
   }
@@ -689,11 +689,11 @@ uint32_t PostStorageService_ReadPosts_pargs::write(::apache::thrift::protocol::T
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter178;
-    for (_iter178 = (*(this->carrier)).begin(); _iter178 != (*(this->carrier)).end(); ++_iter178)
+    std::map<std::string, std::string> ::const_iterator _iter189;
+    for (_iter189 = (*(this->carrier)).begin(); _iter189 != (*(this->carrier)).end(); ++_iter189)
     {
-      xfer += oprot->writeString(_iter178->first);
-      xfer += oprot->writeString(_iter178->second);
+      xfer += oprot->writeString(_iter189->first);
+      xfer += oprot->writeString(_iter189->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -734,14 +734,14 @@ uint32_t PostStorageService_ReadPosts_result::read(::apache::thrift::protocol::T
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size179;
-            ::apache::thrift::protocol::TType _etype182;
-            xfer += iprot->readListBegin(_etype182, _size179);
-            this->success.resize(_size179);
-            uint32_t _i183;
-            for (_i183 = 0; _i183 < _size179; ++_i183)
+            uint32_t _size190;
+            ::apache::thrift::protocol::TType _etype193;
+            xfer += iprot->readListBegin(_etype193, _size190);
+            this->success.resize(_size190);
+            uint32_t _i194;
+            for (_i194 = 0; _i194 < _size190; ++_i194)
             {
-              xfer += this->success[_i183].read(iprot);
+              xfer += this->success[_i194].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -780,10 +780,10 @@ uint32_t PostStorageService_ReadPosts_result::write(::apache::thrift::protocol::
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Post> ::const_iterator _iter184;
-      for (_iter184 = this->success.begin(); _iter184 != this->success.end(); ++_iter184)
+      std::vector<Post> ::const_iterator _iter195;
+      for (_iter195 = this->success.begin(); _iter195 != this->success.end(); ++_iter195)
       {
-        xfer += (*_iter184).write(oprot);
+        xfer += (*_iter195).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -828,14 +828,14 @@ uint32_t PostStorageService_ReadPosts_presult::read(::apache::thrift::protocol::
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size185;
-            ::apache::thrift::protocol::TType _etype188;
-            xfer += iprot->readListBegin(_etype188, _size185);
-            (*(this->success)).resize(_size185);
-            uint32_t _i189;
-            for (_i189 = 0; _i189 < _size185; ++_i189)
+            uint32_t _size196;
+            ::apache::thrift::protocol::TType _etype199;
+            xfer += iprot->readListBegin(_etype199, _size196);
+            (*(this->success)).resize(_size196);
+            uint32_t _i200;
+            for (_i200 = 0; _i200 < _size196; ++_i200)
             {
-              xfer += (*(this->success))[_i189].read(iprot);
+              xfer += (*(this->success))[_i200].read(iprot);
             }
             xfer += iprot->readListEnd();
           }

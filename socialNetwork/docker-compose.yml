@@ -175,6 +175,16 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
 
+  user-timeline-storage-service:
+    image: yg397/social-network-microservices:latest
+    hostname: user-timeline-storage-service
+    ports:
+      - 10012:9090
+    restart: always
+    entrypoint: UserTimelineStorageService
+    volumes:
+      - ./config:/social-network-microservices/config
+
   media-service:
     image: yg397/social-network-microservices:latest
     hostname: media-service

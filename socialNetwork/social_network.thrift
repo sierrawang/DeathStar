@@ -135,6 +135,20 @@ service UserService {
   ) throws (1: ServiceException se)
 }
 
+service UserTimelineStorageService {
+  void UpdateUserTimeline(
+      1: i64 user_id,
+      2: i64 post_id,
+      3: i64 timestamp
+  ) throws (1: ServiceException se)
+
+  list<i64> GetUserTimeline(
+      1: i64 user_id,
+      2: i32 start,
+      3: i32 stop
+  ) throws (1: ServiceException se)
+}
+
 service UserStorageService {
   void WriteUser(
       1: User user

@@ -4,6 +4,7 @@ add_executable(
     ${THRIFT_GEN_CPP_DIR}/UserTimelineService.cpp
     ${THRIFT_GEN_CPP_DIR}/social_network_types.cpp
     ${THRIFT_GEN_CPP_DIR}/PostStorageService.cpp
+    ${THRIFT_GEN_CPP_DIR}/UserTimelineStorageService.cpp
 )
 
 target_include_directories(
@@ -16,7 +17,7 @@ target_include_directories(
 
 target_link_libraries(
     UserTimelineService
-    ${MONGOC_LIBRARIES}
+    #${MONGOC_LIBRARIES}
     nlohmann_json::nlohmann_json
     ${THRIFT_LIB}
     ${CMAKE_THREAD_LIBS_INIT}
@@ -25,9 +26,9 @@ target_link_libraries(
     Boost::log_setup
     Boost::program_options
     jaegertracing
-    /usr/local/lib/libhiredis.a
-    /usr/local/lib/libhiredis_ssl.a
-    /usr/local/lib/libredis++.a
+    #/usr/local/lib/libhiredis.a
+    #/usr/local/lib/libhiredis_ssl.a
+    #/usr/local/lib/libredis++.a
     OpenSSL::SSL
 )
 

@@ -11,8 +11,8 @@
 #include "../logger.h"
 #include "../tracing.h"
 #include "../utils.h"
-#include "../utils_mongodb.h"
-#include "../utils_redis.h"
+// #include "../utils_mongodb.h"
+// #include "../utils_redis.h"
 #include "../utils_thrift.h"
 #include "UserTimelineHandler.h"
 
@@ -29,28 +29,28 @@ int main(int argc, char *argv[]) {
   init_logger();
 
   // Command line options
-  namespace po = boost::program_options;
-  po::options_description desc("Options");
-  desc.add_options()("help", "produce help message")(
-      "redis-cluster",
-      po::value<bool>()->default_value(false)->implicit_value(true),
-      "Enable redis cluster mode");
+  // namespace po = boost::program_options;
+  // po::options_description desc("Options");
+  // desc.add_options()("help", "produce help message")(
+  //     "redis-cluster",
+  //     po::value<bool>()->default_value(false)->implicit_value(true),
+  //     "Enable redis cluster mode");
 
-  po::variables_map vm;
-  po::store(po::parse_command_line(argc, argv, desc), vm);
-  po::notify(vm);
+  // po::variables_map vm;
+  // po::store(po::parse_command_line(argc, argv, desc), vm);
+  // po::notify(vm);
 
-  if (vm.count("help")) {
-    std::cout << desc << "\n";
-    return 0;
-  }
+  // if (vm.count("help")) {
+  //   std::cout << desc << "\n";
+  //   return 0;
+  // }
 
-  bool redis_cluster_flag = false;
-  if (vm.count("redis-cluster")) {
-    if (vm["redis-cluster"].as<bool>()) {
-      redis_cluster_flag = true;
-    }
-  }
+  // bool redis_cluster_flag = false;
+  // if (vm.count("redis-cluster")) {
+  //   if (vm["redis-cluster"].as<bool>()) {
+  //     redis_cluster_flag = true;
+  //   }
+  // }
 
   SetUpTracer("config/jaeger-config.yml", "user-timeline-service");
 
@@ -68,61 +68,88 @@ int main(int argc, char *argv[]) {
   int post_storage_keepalive =
       config_json["post-storage-service"]["keepalive_ms"];
 
-  int mongodb_conns = config_json["user-timeline-mongodb"]["connections"];
-  int mongodb_timeout = config_json["user-timeline-mongodb"]["timeout_ms"];
+  int user_timeline_storage_port =
+      config_json["user-timeline-storage-service"]["port"];
+  std::string user_timeline_storage_addr =
+      config_json["user-timeline-storage-service"]["addr"];
+  int user_timeline_storage_conns =
+      config_json["user-timeline-storage-service"]["connections"];
+  int user_timeline_storage_timeout =
+      config_json["user-timeline-storage-service"]["timeout_ms"];
+  int user_timeline_storage_keepalive =
+      config_json["user-timeline-storage-service"]["keepalive_ms"];
 
-  auto mongodb_client_pool =
-      init_mongodb_client_pool(config_json, "user-timeline", mongodb_conns);
+  // int mongodb_conns = config_json["user-timeline-mongodb"]["connections"];
+  // int mongodb_timeout = config_json["user-timeline-mongodb"]["timeout_ms"];
 
-  if (mongodb_client_pool == nullptr) {
-    return EXIT_FAILURE;
-  }
+  // auto mongodb_client_pool =
+  //     init_mongodb_client_pool(config_json, "user-timeline", mongodb_conns);
+
+  // if (mongodb_client_pool == nullptr) {
+  //   return EXIT_FAILURE;
+  // }
 
   ClientPool<ThriftClient<PostStorageServiceClient>> post_storage_client_pool(
       "post-storage-client", post_storage_addr, post_storage_port, 0,
       post_storage_conns, post_storage_timeout, post_storage_keepalive,
       config_json);
 
-  mongoc_client_t *mongodb_client = mongoc_client_pool_pop(mongodb_client_pool);
-  if (!mongodb_client) {
-    LOG(fatal) << "Failed to pop mongoc client";
-    return EXIT_FAILURE;
-  }
-  bool r = false;
-  while (!r) {
-    r = CreateIndex(mongodb_client, "user-timeline", "user_id", true);
-    if (!r) {
-      LOG(error) << "Failed to create mongodb index, try again";
-      sleep(1);
-    }
-  }
-  mongoc_client_pool_push(mongodb_client_pool, mongodb_client);
+  ClientPool<ThriftClient<UserTimelineStorageServiceClient>>
+      user_timeline_storage_client_pool(
+          "user-timeline-storage-client", user_timeline_storage_addr,
+          user_timeline_storage_port, 0, user_timeline_storage_conns,
+          user_timeline_storage_timeout, user_timeline_storage_keepalive,
+          config_json);
+
+  // mongoc_client_t *mongodb_client =
+  // mongoc_client_pool_pop(mongodb_client_pool); if (!mongodb_client) {
+  //   LOG(fatal) << "Failed to pop mongoc client";
+  //   return EXIT_FAILURE;
+  // }
+  // bool r = false;
+  // while (!r) {
+  //   r = CreateIndex(mongodb_client, "user-timeline", "user_id", true);
+  //   if (!r) {
+  //     LOG(error) << "Failed to create mongodb index, try again";
+  //     sleep(1);
+  //   }
+  // }
+  // mongoc_client_pool_push(mongodb_client_pool, mongodb_client);
   std::shared_ptr<TServerSocket> server_socket =
       get_server_socket(config_json, "0.0.0.0", port);
 
-  if (redis_cluster_flag) {
-    RedisCluster redis_client_pool =
-        init_redis_cluster_client_pool(config_json, "user-timeline");
-    TThreadedServer server(std::make_shared<UserTimelineServiceProcessor>(
-                               std::make_shared<UserTimelineHandler>(
-                                   &redis_client_pool, mongodb_client_pool,
-                                   &post_storage_client_pool)),
-                           server_socket,
-                           std::make_shared<TFramedTransportFactory>(),
-                           std::make_shared<TBinaryProtocolFactory>());
-    LOG(info) << "Starting the user-timeline-service server...";
-    server.serve();
-  } else {
-    Redis redis_client_pool =
-        init_redis_client_pool(config_json, "user-timeline");
-    TThreadedServer server(std::make_shared<UserTimelineServiceProcessor>(
-                               std::make_shared<UserTimelineHandler>(
-                                   &redis_client_pool, mongodb_client_pool,
-                                   &post_storage_client_pool)),
-                           server_socket,
-                           std::make_shared<TFramedTransportFactory>(),
-                           std::make_shared<TBinaryProtocolFactory>());
-    LOG(info) << "Starting the user-timeline-service server...";
-    server.serve();
-  }
+  // if (redis_cluster_flag) {
+  //   RedisCluster redis_client_pool =
+  //       init_redis_cluster_client_pool(config_json, "user-timeline");
+  //   TThreadedServer server(std::make_shared<UserTimelineServiceProcessor>(
+  //                              std::make_shared<UserTimelineHandler>(
+  //                                  &redis_client_pool, mongodb_client_pool,
+  //                                  &post_storage_client_pool)),
+  //                          server_socket,
+  //                          std::make_shared<TFramedTransportFactory>(),
+  //                          std::make_shared<TBinaryProtocolFactory>());
+  //   LOG(info) << "Starting the user-timeline-service server...";
+  //   server.serve();
+  // } else {
+  //   Redis redis_client_pool =
+  //       init_redis_client_pool(config_json, "user-timeline");
+  //   TThreadedServer server(std::make_shared<UserTimelineServiceProcessor>(
+  //                              std::make_shared<UserTimelineHandler>(
+  //                                  &redis_client_pool, mongodb_client_pool,
+  //                                  &post_storage_client_pool)),
+  //                          server_socket,
+  //                          std::make_shared<TFramedTransportFactory>(),
+  //                          std::make_shared<TBinaryProtocolFactory>());
+  //   LOG(info) << "Starting the user-timeline-service server...";
+  //   server.serve();
+  // }
+
+  TThreadedServer server(
+      std::make_shared<UserTimelineServiceProcessor>(
+          std::make_shared<UserTimelineHandler>(
+              &post_storage_client_pool, &user_timeline_storage_client_pool)),
+      server_socket, std::make_shared<TFramedTransportFactory>(),
+      std::make_shared<TBinaryProtocolFactory>());
+  LOG(info) << "Starting the user-timeline-service server...";
+  server.serve();
 }

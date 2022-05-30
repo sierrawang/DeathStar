@@ -1,4 +1,11 @@
 {
+  "post-storage-storage-service": {
+    "keepalive_ms": 10000,
+    "addr": "post-storage-storage-service",
+    "timeout_ms": 10000,
+    "port": 9090,
+    "connections": 512
+  },
   "user-timeline-storage-service": {
     "keepalive_ms": 10000,
     "addr": "user-timeline-storage-service",

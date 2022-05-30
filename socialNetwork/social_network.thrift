@@ -135,6 +135,26 @@ service UserService {
   ) throws (1: ServiceException se)
 }
 
+service PostStorageStorageService {
+  void StorePost(
+    1: i64 req_id,
+    2: Post post,
+    3: map<string, string> carrier
+  ) throws (1: ServiceException se)
+
+  Post ReadPost(
+    1: i64 req_id,
+    2: i64 post_id,
+    3: map<string, string> carrier
+  ) throws (1: ServiceException se)
+
+  list<Post> ReadPosts(
+    1: i64 req_id,
+    2: list<i64> post_ids,
+    3: map<string, string> carrier
+  ) throws (1: ServiceException se)
+}
+
 service UserTimelineStorageService {
   void UpdateUserTimeline(
       1: i64 user_id,

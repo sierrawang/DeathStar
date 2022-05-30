@@ -169,31 +169,31 @@ class ComposeMedia_args(object):
             elif fid == 2:
                 if ftype == TType.LIST:
                     self.media_types = []
-                    (_etype384, _size381) = iprot.readListBegin()
-                    for _i385 in range(_size381):
-                        _elem386 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.media_types.append(_elem386)
+                    (_etype425, _size422) = iprot.readListBegin()
+                    for _i426 in range(_size422):
+                        _elem427 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.media_types.append(_elem427)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.LIST:
                     self.media_ids = []
-                    (_etype390, _size387) = iprot.readListBegin()
-                    for _i391 in range(_size387):
-                        _elem392 = iprot.readI64()
-                        self.media_ids.append(_elem392)
+                    (_etype431, _size428) = iprot.readListBegin()
+                    for _i432 in range(_size428):
+                        _elem433 = iprot.readI64()
+                        self.media_ids.append(_elem433)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype394, _vtype395, _size393) = iprot.readMapBegin()
-                    for _i397 in range(_size393):
-                        _key398 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val399 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key398] = _val399
+                    (_ktype435, _vtype436, _size434) = iprot.readMapBegin()
+                    for _i438 in range(_size434):
+                        _key439 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val440 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key439] = _val440
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -214,23 +214,23 @@ class ComposeMedia_args(object):
         if self.media_types is not None:
             oprot.writeFieldBegin('media_types', TType.LIST, 2)
             oprot.writeListBegin(TType.STRING, len(self.media_types))
-            for iter400 in self.media_types:
-                oprot.writeString(iter400.encode('utf-8') if sys.version_info[0] == 2 else iter400)
+            for iter441 in self.media_types:
+                oprot.writeString(iter441.encode('utf-8') if sys.version_info[0] == 2 else iter441)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.media_ids is not None:
             oprot.writeFieldBegin('media_ids', TType.LIST, 3)
             oprot.writeListBegin(TType.I64, len(self.media_ids))
-            for iter401 in self.media_ids:
-                oprot.writeI64(iter401)
+            for iter442 in self.media_ids:
+                oprot.writeI64(iter442)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 4)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter402, viter403 in self.carrier.items():
-                oprot.writeString(kiter402.encode('utf-8') if sys.version_info[0] == 2 else kiter402)
-                oprot.writeString(viter403.encode('utf-8') if sys.version_info[0] == 2 else viter403)
+            for kiter443, viter444 in self.carrier.items():
+                oprot.writeString(kiter443.encode('utf-8') if sys.version_info[0] == 2 else kiter443)
+                oprot.writeString(viter444.encode('utf-8') if sys.version_info[0] == 2 else viter444)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -284,11 +284,11 @@ class ComposeMedia_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype407, _size404) = iprot.readListBegin()
-                    for _i408 in range(_size404):
-                        _elem409 = Media()
-                        _elem409.read(iprot)
-                        self.success.append(_elem409)
+                    (_etype448, _size445) = iprot.readListBegin()
+                    for _i449 in range(_size445):
+                        _elem450 = Media()
+                        _elem450.read(iprot)
+                        self.success.append(_elem450)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -310,8 +310,8 @@ class ComposeMedia_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
-            for iter410 in self.success:
-                iter410.write(oprot)
+            for iter451 in self.success:
+                iter451.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:

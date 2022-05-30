@@ -41,6 +41,18 @@ int main(int argc, char* argv[]) {
 
   int port = config_json["post-storage-service"]["port"];
 
+  int post_storage_storage_port = config_json["post-storage-storage-service"]["port"];
+  std::string post_storage_storage_addr = config_json["post-storage-storage-service"]["addr"];
+  int post_storage_storage_conns = config_json["post-storage-storage-service"]["connections"];
+  int post_storage_storage_timeout = config_json["post-storage-storage-service"]["timeout_ms"];
+  int post_storage_storage_keepalive =
+      config_json["post-storage-storage-service"]["keepalive_ms"];
+
+  ClientPool<ThriftClient<PostStorageStorageServiceClient>> post_storage_storage_client_pool(
+      "post-storage-storage-client", post_storage_storage_addr, post_storage_storage_port, 0,
+      post_storage_storage_conns, post_storage_storage_timeout, post_storage_storage_keepalive,
+      config_json);
+
   // int mongodb_conns = config_json["post-storage-mongodb"]["connections"];
   // int mongodb_timeout = config_json["post-storage-mongodb"]["timeout_ms"];
 
@@ -79,7 +91,7 @@ int main(int argc, char* argv[]) {
   //                        std::make_shared<TBinaryProtocolFactory>());
 
   TThreadedServer server(std::make_shared<PostStorageServiceProcessor>(
-                             std::make_shared<PostStorageHandler>()),
+                             std::make_shared<PostStorageHandler>(&post_storage_storage_client_pool)),
                          server_socket,
                          std::make_shared<TFramedTransportFactory>(),
                          std::make_shared<TBinaryProtocolFactory>());

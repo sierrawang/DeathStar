@@ -185,6 +185,16 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
 
+  post-storage-storage-service:
+    image: yg397/social-network-microservices:latest
+    hostname: post-storage-storage-service
+    ports:
+      - 10013:9090
+    restart: always
+    entrypoint: PostStorageStorageService
+    volumes:
+      - ./config:/social-network-microservices/config
+
   media-service:
     image: yg397/social-network-microservices:latest
     hostname: media-service

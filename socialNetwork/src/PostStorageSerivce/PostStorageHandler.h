@@ -12,6 +12,9 @@
 #include <string>
 
 #include "../../gen-cpp/PostStorageService.h"
+#include "../../gen-cpp/PostStorageStorageService.h"
+#include "../ClientPool.h"
+#include "../ThriftClient.h"
 #include "../logger.h"
 #include "../tracing.h"
 
@@ -19,9 +22,10 @@ namespace social_network {
 using json = nlohmann::json;
 
 class PostStorageHandler : public PostStorageServiceIf {
- public:
+public:
   // PostStorageHandler(memcached_pool_st *, mongoc_client_pool_t *);
-  PostStorageHandler();
+  PostStorageHandler(
+      ClientPool<ThriftClient<PostStorageStorageServiceClient>> *);
   ~PostStorageHandler() override = default;
 
   void StorePost(int64_t req_id, const Post &post,
@@ -34,12 +38,14 @@ class PostStorageHandler : public PostStorageServiceIf {
                  const std::vector<int64_t> &post_ids,
                  const std::map<std::string, std::string> &carrier) override;
 
- private:
+private:
   // memcached_pool_st *_memcached_client_pool;
   // mongoc_client_pool_t *_mongodb_client_pool;
 
   // Not sure if this is persistent or needs to be stored in another app
   std::map<int64_t, Post> m_posts_db;
+  ClientPool<ThriftClient<PostStorageStorageServiceClient>>
+      *_post_storage_client_pool;
 };
 
 // PostStorageHandler::PostStorageHandler(
@@ -49,7 +55,10 @@ class PostStorageHandler : public PostStorageServiceIf {
 //   _mongodb_client_pool = mongodb_client_pool;
 // }
 
-PostStorageHandler::PostStorageHandler() {
+PostStorageHandler::PostStorageHandler(
+    ClientPool<ThriftClient<PostStorageStorageServiceClient>>
+        *post_storage_client_pool) {
+  _post_storage_client_pool = post_storage_client_pool;
 }
 
 void PostStorageHandler::StorePost(
@@ -101,14 +110,13 @@ void PostStorageHandler::StorePost(
   // char buf[16];
 
   // This is constructing a list of the urls in bson form
-  // Again, this is just taking out info from the post object and putting it 
+  // Again, this is just taking out info from the post object and putting it
   // in bson format, so I don't think we need it
   // bson_t url_list;
   // BSON_APPEND_ARRAY_BEGIN(new_doc, "urls", &url_list);
   // for (auto &url : post.urls) {
-  //   // This stores the value of idx as a string in buf, and makes key point to it
-  //   bson_uint32_to_string(idx, &key, buf, sizeof buf);
-  //   bson_t url_doc;
+  //   // This stores the value of idx as a string in buf, and makes key point
+  //   to it bson_uint32_to_string(idx, &key, buf, sizeof buf); bson_t url_doc;
   //   BSON_APPEND_DOCUMENT_BEGIN(&url_list, key, &url_doc);
   //   BSON_APPEND_UTF8(&url_doc, "shortened_url", url.shortened_url.c_str());
   //   BSON_APPEND_UTF8(&url_doc, "expanded_url", url.expanded_url.c_str());
@@ -152,14 +160,28 @@ void PostStorageHandler::StorePost(
       {opentracing::ChildOf(&span->context())});
   // bool inserted = mongoc_collection_insert_one(collection, new_doc, nullptr,
   //                                              nullptr, &error);
-  m_posts_db.emplace(post.post_id, post);
+  auto post_storage_client_wrapper = _post_storage_client_pool->Pop();
+  if (!post_storage_client_wrapper) {
+    ServiceException se;
+    se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    se.message = "Failed to connect to post-storage-storage-service";
+    throw se;
+  }
+  auto post_storage_client = post_storage_client_wrapper->GetClient();
+  try {
+    post_storage_client->StorePost(req_id, post, carrier);
+  } catch (...) {
+    _post_storage_client_pool->Remove(post_storage_client_wrapper);
+    LOG(error) << "Failed to update user in post-storage-storage-service";
+    throw;
+  }
+  _post_storage_client_pool->Keepalive(post_storage_client_wrapper);
   insert_span->Finish();
 
   // if (!inserted) {
-  //   LOG(error) << "Error: Failed to insert post to MongoDB: " << error.message;
-  //   ServiceException se;
-  //   se.errorCode = ErrorCode::SE_MONGODB_ERROR;
-  //   se.message = error.message;
+  //   LOG(error) << "Error: Failed to insert post to MongoDB: " <<
+  //   error.message; ServiceException se; se.errorCode =
+  //   ErrorCode::SE_MONGODB_ERROR; se.message = error.message;
   //   bson_destroy(new_doc);
   //   mongoc_collection_destroy(collection);
   //   mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
@@ -185,17 +207,22 @@ void PostStorageHandler::ReadPost(
       "read_post_server", {opentracing::ChildOf(parent_span->get())});
   opentracing::Tracer::Global()->Inject(span->context(), writer);
 
-  auto it = m_posts_db.find(post_id);
-  if (it == m_posts_db.end()) {
-    LOG(warning) << "Post_id: " << post_id << " doesn't exist in MongoDB";
+  auto post_storage_client_wrapper = _post_storage_client_pool->Pop();
+  if (!post_storage_client_wrapper) {
     ServiceException se;
-    se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
-    se.message =
-        "Post_id: " + std::to_string(post_id) + " doesn't exist in MongoDB";
+    se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    se.message = "Failed to connect to post-storage-storage-service";
     throw se;
-  } else {
-    _return = it->second;
   }
+  auto post_storage_client = post_storage_client_wrapper->GetClient();
+  try {
+    post_storage_client->ReadPost(_return, req_id, post_id, carrier);
+  } catch (...) {
+    _post_storage_client_pool->Remove(post_storage_client_wrapper);
+    LOG(error) << "Failed to read post in post-storage-storage-service";
+    throw;
+  }
+  _post_storage_client_pool->Keepalive(post_storage_client_wrapper);
   // std::string post_id_str = std::to_string(post_id);
 
   // memcached_return_t memcached_rc;
@@ -211,9 +238,11 @@ void PostStorageHandler::ReadPost(
   // size_t post_mmc_size;
   // uint32_t memcached_flags;
   // auto get_span = opentracing::Tracer::Global()->StartSpan(
-  //     "post_storage_mmc_get_client", {opentracing::ChildOf(&span->context())});
+  //     "post_storage_mmc_get_client",
+  //     {opentracing::ChildOf(&span->context())});
   // char *post_mmc =
-  //     memcached_get(memcached_client, post_id_str.c_str(), post_id_str.length(),
+  //     memcached_get(memcached_client, post_id_str.c_str(),
+  //     post_id_str.length(),
   //                   &post_mmc_size, &memcached_flags, &memcached_rc);
   // if (!post_mmc && memcached_rc != MEMCACHED_NOTFOUND) {
   //   ServiceException se;
@@ -256,93 +285,94 @@ void PostStorageHandler::ReadPost(
   //   }
   //   free(post_mmc);
   // } else {
-    // // If not cached in memcached
-    // mongoc_client_t *mongodb_client =
-    //     mongoc_client_pool_pop(_mongodb_client_pool);
-    // if (!mongodb_client) {
-    //   ServiceException se;
-    //   se.errorCode = ErrorCode::SE_MONGODB_ERROR;
-    //   se.message = "Failed to pop a client from MongoDB pool";
-    //   throw se;
-    // }
+  // // If not cached in memcached
+  // mongoc_client_t *mongodb_client =
+  //     mongoc_client_pool_pop(_mongodb_client_pool);
+  // if (!mongodb_client) {
+  //   ServiceException se;
+  //   se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+  //   se.message = "Failed to pop a client from MongoDB pool";
+  //   throw se;
+  // }
 
-    // auto collection =
-    //     mongoc_client_get_collection(mongodb_client, "post", "post");
-    // if (!collection) {
-    //   ServiceException se;
-    //   se.errorCode = ErrorCode::SE_MONGODB_ERROR;
-    //   se.message = "Failed to create collection user from DB user";
-    //   mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
-    //   throw se;
-    // }
+  // auto collection =
+  //     mongoc_client_get_collection(mongodb_client, "post", "post");
+  // if (!collection) {
+  //   ServiceException se;
+  //   se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+  //   se.message = "Failed to create collection user from DB user";
+  //   mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+  //   throw se;
+  // }
 
-    // bson_t *query = bson_new();
-    // BSON_APPEND_INT64(query, "post_id", post_id);
-    // auto find_span = opentracing::Tracer::Global()->StartSpan(
-    //     "post_storage_mongo_find_client",
-    //     {opentracing::ChildOf(&span->context())});
-    // mongoc_cursor_t *cursor =
-    //     mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
-    // const bson_t *doc;
-    // bool found = mongoc_cursor_next(cursor, &doc);
-    // find_span->Finish();
-    // if (!found) {
-    //   bson_error_t error;
-    //   if (mongoc_cursor_error(cursor, &error)) {
-    //     LOG(warning) << error.message;
-    //     bson_destroy(query);
-    //     mongoc_cursor_destroy(cursor);
-    //     mongoc_collection_destroy(collection);
-    //     mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
-    //     ServiceException se;
-    //     se.errorCode = ErrorCode::SE_MONGODB_ERROR;
-    //     se.message = error.message;
-    //     throw se;
-    //   } else {
-    //     LOG(warning) << "Post_id: " << post_id << " doesn't exist in MongoDB";
-    //     bson_destroy(query);
-    //     mongoc_cursor_destroy(cursor);
-    //     mongoc_collection_destroy(collection);
-    //     mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
-    //     ServiceException se;
-    //     se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
-    //     se.message =
-    //         "Post_id: " + std::to_string(post_id) + " doesn't exist in MongoDB";
-    //     throw se;
-    //   }
-    // } else {
-      // LOG(debug) << "Post_id: " << post_id << " found in MongoDB";
-      // auto post_json_char = bson_as_json(doc, nullptr);
-      // json post_json = json::parse(post_json_char);
-      // _return.req_id = post_json["req_id"];
-      // _return.timestamp = post_json["timestamp"];
-      // _return.post_id = post_json["post_id"];
-      // _return.creator.user_id = post_json["creator"]["user_id"];
-      // _return.creator.username = post_json["creator"]["username"];
-      // _return.post_type = post_json["post_type"];
-      // _return.text = post_json["text"];
-      // for (auto &item : post_json["media"]) {
-      //   Media media;
-      //   media.media_id = item["media_id"];
-      //   media.media_type = item["media_type"];
-      //   _return.media.emplace_back(media);
-      // }
-      // for (auto &item : post_json["user_mentions"]) {
-      //   UserMention user_mention;
-      //   user_mention.username = item["username"];
-      //   user_mention.user_id = item["user_id"];
-      //   _return.user_mentions.emplace_back(user_mention);
-      // }
-      // for (auto &item : post_json["urls"]) {
-      //   Url url;
-      //   url.shortened_url = item["shortened_url"];
-      //   url.expanded_url = item["expanded_url"];
-      //   _return.urls.emplace_back(url);
-      // }
-      // bson_destroy(query);
-      // mongoc_cursor_destroy(cursor);
-      // mongoc_collection_destroy(collection);
-      // mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+  // bson_t *query = bson_new();
+  // BSON_APPEND_INT64(query, "post_id", post_id);
+  // auto find_span = opentracing::Tracer::Global()->StartSpan(
+  //     "post_storage_mongo_find_client",
+  //     {opentracing::ChildOf(&span->context())});
+  // mongoc_cursor_t *cursor =
+  //     mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+  // const bson_t *doc;
+  // bool found = mongoc_cursor_next(cursor, &doc);
+  // find_span->Finish();
+  // if (!found) {
+  //   bson_error_t error;
+  //   if (mongoc_cursor_error(cursor, &error)) {
+  //     LOG(warning) << error.message;
+  //     bson_destroy(query);
+  //     mongoc_cursor_destroy(cursor);
+  //     mongoc_collection_destroy(collection);
+  //     mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+  //     ServiceException se;
+  //     se.errorCode = ErrorCode::SE_MONGODB_ERROR;
+  //     se.message = error.message;
+  //     throw se;
+  //   } else {
+  //     LOG(warning) << "Post_id: " << post_id << " doesn't exist in MongoDB";
+  //     bson_destroy(query);
+  //     mongoc_cursor_destroy(cursor);
+  //     mongoc_collection_destroy(collection);
+  //     mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
+  //     ServiceException se;
+  //     se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+  //     se.message =
+  //         "Post_id: " + std::to_string(post_id) + " doesn't exist in
+  //         MongoDB";
+  //     throw se;
+  //   }
+  // } else {
+  // LOG(debug) << "Post_id: " << post_id << " found in MongoDB";
+  // auto post_json_char = bson_as_json(doc, nullptr);
+  // json post_json = json::parse(post_json_char);
+  // _return.req_id = post_json["req_id"];
+  // _return.timestamp = post_json["timestamp"];
+  // _return.post_id = post_json["post_id"];
+  // _return.creator.user_id = post_json["creator"]["user_id"];
+  // _return.creator.username = post_json["creator"]["username"];
+  // _return.post_type = post_json["post_type"];
+  // _return.text = post_json["text"];
+  // for (auto &item : post_json["media"]) {
+  //   Media media;
+  //   media.media_id = item["media_id"];
+  //   media.media_type = item["media_type"];
+  //   _return.media.emplace_back(media);
+  // }
+  // for (auto &item : post_json["user_mentions"]) {
+  //   UserMention user_mention;
+  //   user_mention.username = item["username"];
+  //   user_mention.user_id = item["user_id"];
+  //   _return.user_mentions.emplace_back(user_mention);
+  // }
+  // for (auto &item : post_json["urls"]) {
+  //   Url url;
+  //   url.shortened_url = item["shortened_url"];
+  //   url.expanded_url = item["expanded_url"];
+  //   _return.urls.emplace_back(url);
+  // }
+  // bson_destroy(query);
+  // mongoc_cursor_destroy(cursor);
+  // mongoc_collection_destroy(collection);
+  // mongoc_client_pool_push(_mongodb_client_pool, mongodb_client);
 
   //     // upload post to memcached
   //     memcached_client =
@@ -359,8 +389,8 @@ void PostStorageHandler::ReadPost(
 
   //     memcached_rc = memcached_set(
   //         memcached_client, post_id_str.c_str(), post_id_str.length(),
-  //         post_json_char, std::strlen(post_json_char), static_cast<time_t>(0),
-  //         static_cast<uint32_t>(0));
+  //         post_json_char, std::strlen(post_json_char),
+  //         static_cast<time_t>(0), static_cast<uint32_t>(0));
   //     if (memcached_rc != MEMCACHED_SUCCESS) {
   //       LOG(warning) << "Failed to set post to Memcached: "
   //                    << memcached_strerror(memcached_client, memcached_rc);
@@ -393,13 +423,13 @@ void PostStorageHandler::ReadPosts(
 
   std::set<int64_t> post_ids_not_cached(post_ids.begin(), post_ids.end());
   if (post_ids_not_cached.size() != post_ids.size()) {
-    LOG(error)<< "Post_ids are duplicated";
+    LOG(error) << "Post_ids are duplicated";
     ServiceException se;
     se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
     se.message = "Post_ids are duplicated";
     throw se;
   }
-  std::map<int64_t, Post> return_map;
+  // std::map<int64_t, Post> return_map;
   // memcached_return_t memcached_rc;
   // auto memcached_client =
   //     memcached_pool_pop(_memcached_client_pool, true, &memcached_rc);
@@ -440,7 +470,8 @@ void PostStorageHandler::ReadPosts(
   // size_t return_value_length;
   // uint32_t flags;
   // auto get_span = opentracing::Tracer::Global()->StartSpan(
-  //     "post_storage_mmc_mget_client", {opentracing::ChildOf(&span->context())});
+  //     "post_storage_mmc_mget_client",
+  //     {opentracing::ChildOf(&span->context())});
 
   // while (true) {
   //   return_value =
@@ -540,7 +571,8 @@ void PostStorageHandler::ReadPosts(
   //   bson_append_array_end(&query_child, &query_post_id_list);
   //   bson_append_document_end(query, &query_child);
   //   mongoc_cursor_t *cursor =
-  //       mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+  //       mongoc_collection_find_with_opts(collection, query, nullptr,
+  //       nullptr);
   //   const bson_t *doc;
 
   //   auto find_span = opentracing::Tracer::Global()->StartSpan(
@@ -616,9 +648,11 @@ void PostStorageHandler::ReadPosts(
   //         "mmc_set_client", {opentracing::ChildOf(&span->context())});
   //     for (auto &it : post_json_map) {
   //       std::string id_str = std::to_string(it.first);
-  //       _rc = memcached_set(_memcached_client, id_str.c_str(), id_str.length(),
+  //       _rc = memcached_set(_memcached_client, id_str.c_str(),
+  //       id_str.length(),
   //                           it.second.c_str(), it.second.length(),
-  //                           static_cast<time_t>(0), static_cast<uint32_t>(0));
+  //                           static_cast<time_t>(0),
+  //                           static_cast<uint32_t>(0));
   //     }
   //     memcached_pool_push(_memcached_client_pool, _memcached_client);
   //     set_span->Finish();
@@ -640,32 +674,35 @@ void PostStorageHandler::ReadPosts(
   //   throw se;
   // }
 
-  for (auto &post_id : post_ids) {
-    auto it = m_posts_db.find(post_id);
-    if (it == m_posts_db.end()) {
-      LOG(error) << "Return set incomplete";
-      ServiceException se;
-      se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
-      se.message = "Return set incomplete";
-      throw se;
-    } else {
-      return_map.emplace(post_id, it->second);
-    }
+  auto post_storage_client_wrapper = _post_storage_client_pool->Pop();
+  if (!post_storage_client_wrapper) {
+    ServiceException se;
+    se.errorCode = ErrorCode::SE_THRIFT_CONN_ERROR;
+    se.message = "Failed to connect to post-storage-storage-service";
+    throw se;
+  }
+  std::vector<Post> _return_tmp;
+  auto post_storage_client = post_storage_client_wrapper->GetClient();
+  try {
+    post_storage_client->ReadPosts(_return_tmp, req_id, post_ids, carrier);
+  } catch (...) {
+    _post_storage_client_pool->Remove(post_storage_client_wrapper);
+    LOG(error) << "Failed to read posts in post-storage-storage-service";
+    throw;
+  }
+  _post_storage_client_pool->Keepalive(post_storage_client_wrapper);
+
+  if (_return_tmp.size() != post_ids.size()) {
+    LOG(error) << "Return set incomplete";
+    ServiceException se;
+    se.errorCode = ErrorCode::SE_THRIFT_HANDLER_ERROR;
+    se.message = "Return set incomplete";
+    throw se;
   }
 
-  for (auto &post_id : post_ids) {
-    _return.emplace_back(return_map[post_id]);
-  }
-
-  // try {
-  //   for (auto &it : set_futures) {
-  //     it.get();
-  //   }
-  // } catch (...) {
-  //   LOG(warning) << "Failed to set posts to memcached";
-  // }
+  _return = _return_tmp;
 }
 
-}  // namespace social_network
+} // namespace social_network
 
-#endif  // SOCIAL_NETWORK_MICROSERVICES_POSTSTORAGEHANDLER_H
+#endif // SOCIAL_NETWORK_MICROSERVICES_POSTSTORAGEHANDLER_H

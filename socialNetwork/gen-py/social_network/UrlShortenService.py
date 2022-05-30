@@ -239,21 +239,21 @@ class ComposeUrls_args(object):
             elif fid == 2:
                 if ftype == TType.LIST:
                     self.urls = []
-                    (_etype379, _size376) = iprot.readListBegin()
-                    for _i380 in range(_size376):
-                        _elem381 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.urls.append(_elem381)
+                    (_etype386, _size383) = iprot.readListBegin()
+                    for _i387 in range(_size383):
+                        _elem388 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.urls.append(_elem388)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype383, _vtype384, _size382) = iprot.readMapBegin()
-                    for _i386 in range(_size382):
-                        _key387 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val388 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key387] = _val388
+                    (_ktype390, _vtype391, _size389) = iprot.readMapBegin()
+                    for _i393 in range(_size389):
+                        _key394 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val395 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key394] = _val395
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -274,16 +274,16 @@ class ComposeUrls_args(object):
         if self.urls is not None:
             oprot.writeFieldBegin('urls', TType.LIST, 2)
             oprot.writeListBegin(TType.STRING, len(self.urls))
-            for iter389 in self.urls:
-                oprot.writeString(iter389.encode('utf-8') if sys.version_info[0] == 2 else iter389)
+            for iter396 in self.urls:
+                oprot.writeString(iter396.encode('utf-8') if sys.version_info[0] == 2 else iter396)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter390, viter391 in self.carrier.items():
-                oprot.writeString(kiter390.encode('utf-8') if sys.version_info[0] == 2 else kiter390)
-                oprot.writeString(viter391.encode('utf-8') if sys.version_info[0] == 2 else viter391)
+            for kiter397, viter398 in self.carrier.items():
+                oprot.writeString(kiter397.encode('utf-8') if sys.version_info[0] == 2 else kiter397)
+                oprot.writeString(viter398.encode('utf-8') if sys.version_info[0] == 2 else viter398)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -336,11 +336,11 @@ class ComposeUrls_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype395, _size392) = iprot.readListBegin()
-                    for _i396 in range(_size392):
-                        _elem397 = Url()
-                        _elem397.read(iprot)
-                        self.success.append(_elem397)
+                    (_etype402, _size399) = iprot.readListBegin()
+                    for _i403 in range(_size399):
+                        _elem404 = Url()
+                        _elem404.read(iprot)
+                        self.success.append(_elem404)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -362,8 +362,8 @@ class ComposeUrls_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
-            for iter398 in self.success:
-                iter398.write(oprot)
+            for iter405 in self.success:
+                iter405.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:
@@ -425,21 +425,21 @@ class GetExtendedUrls_args(object):
             elif fid == 2:
                 if ftype == TType.LIST:
                     self.shortened_urls = []
-                    (_etype402, _size399) = iprot.readListBegin()
-                    for _i403 in range(_size399):
-                        _elem404 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.shortened_urls.append(_elem404)
+                    (_etype409, _size406) = iprot.readListBegin()
+                    for _i410 in range(_size406):
+                        _elem411 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.shortened_urls.append(_elem411)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype406, _vtype407, _size405) = iprot.readMapBegin()
-                    for _i409 in range(_size405):
-                        _key410 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val411 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key410] = _val411
+                    (_ktype413, _vtype414, _size412) = iprot.readMapBegin()
+                    for _i416 in range(_size412):
+                        _key417 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val418 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key417] = _val418
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -460,16 +460,16 @@ class GetExtendedUrls_args(object):
         if self.shortened_urls is not None:
             oprot.writeFieldBegin('shortened_urls', TType.LIST, 2)
             oprot.writeListBegin(TType.STRING, len(self.shortened_urls))
-            for iter412 in self.shortened_urls:
-                oprot.writeString(iter412.encode('utf-8') if sys.version_info[0] == 2 else iter412)
+            for iter419 in self.shortened_urls:
+                oprot.writeString(iter419.encode('utf-8') if sys.version_info[0] == 2 else iter419)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter413, viter414 in self.carrier.items():
-                oprot.writeString(kiter413.encode('utf-8') if sys.version_info[0] == 2 else kiter413)
-                oprot.writeString(viter414.encode('utf-8') if sys.version_info[0] == 2 else viter414)
+            for kiter420, viter421 in self.carrier.items():
+                oprot.writeString(kiter420.encode('utf-8') if sys.version_info[0] == 2 else kiter420)
+                oprot.writeString(viter421.encode('utf-8') if sys.version_info[0] == 2 else viter421)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -522,10 +522,10 @@ class GetExtendedUrls_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype418, _size415) = iprot.readListBegin()
-                    for _i419 in range(_size415):
-                        _elem420 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.success.append(_elem420)
+                    (_etype425, _size422) = iprot.readListBegin()
+                    for _i426 in range(_size422):
+                        _elem427 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.success.append(_elem427)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -547,8 +547,8 @@ class GetExtendedUrls_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.STRING, len(self.success))
-            for iter421 in self.success:
-                oprot.writeString(iter421.encode('utf-8') if sys.version_info[0] == 2 else iter421)
+            for iter428 in self.success:
+                oprot.writeString(iter428.encode('utf-8') if sys.version_info[0] == 2 else iter428)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:

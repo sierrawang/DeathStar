@@ -1,4 +1,11 @@
 {
+  "url-shorten-storage-service": {
+    "keepalive_ms": 10000,
+    "addr": "url-shorten-storage-service",
+    "timeout_ms": 10000,
+    "port": 9090,
+    "connections": 512
+  },
   "post-storage-storage-service": {
     "keepalive_ms": 10000,
     "addr": "post-storage-storage-service",

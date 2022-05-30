@@ -155,6 +155,12 @@ service PostStorageStorageService {
   ) throws (1: ServiceException se)
 }
 
+service UrlShortenStorageService {
+  void StoreUrls(
+    1: list<Url> target_urls
+  ) throws (1: ServiceException se)
+}
+
 service UserTimelineStorageService {
   void UpdateUserTimeline(
       1: i64 user_id,

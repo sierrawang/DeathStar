@@ -464,10 +464,10 @@ class GetUserTimeline_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype151, _size148) = iprot.readListBegin()
-                    for _i152 in range(_size148):
-                        _elem153 = iprot.readI64()
-                        self.success.append(_elem153)
+                    (_etype158, _size155) = iprot.readListBegin()
+                    for _i159 in range(_size155):
+                        _elem160 = iprot.readI64()
+                        self.success.append(_elem160)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -489,8 +489,8 @@ class GetUserTimeline_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.I64, len(self.success))
-            for iter154 in self.success:
-                oprot.writeI64(iter154)
+            for iter161 in self.success:
+                oprot.writeI64(iter161)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:

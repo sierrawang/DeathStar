@@ -72,6 +72,12 @@ struct Post {
   9: PostType post_type;
 }
 
+service UrlShortenStorageService {
+  void StoreUrls(
+    1: list<Url> target_urls
+  ) throws (1: ServiceException se)
+}
+
 service UniqueIdService {
   i64 ComposeUniqueId (
       1: i64 req_id,

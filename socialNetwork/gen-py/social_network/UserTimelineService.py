@@ -268,11 +268,11 @@ class WriteUserTimeline_args(object):
             elif fid == 5:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype252, _vtype253, _size251) = iprot.readMapBegin()
-                    for _i255 in range(_size251):
-                        _key256 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val257 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key256] = _val257
+                    (_ktype259, _vtype260, _size258) = iprot.readMapBegin()
+                    for _i262 in range(_size258):
+                        _key263 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val264 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key263] = _val264
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -305,9 +305,9 @@ class WriteUserTimeline_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 5)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter258, viter259 in self.carrier.items():
-                oprot.writeString(kiter258.encode('utf-8') if sys.version_info[0] == 2 else kiter258)
-                oprot.writeString(viter259.encode('utf-8') if sys.version_info[0] == 2 else viter259)
+            for kiter265, viter266 in self.carrier.items():
+                oprot.writeString(kiter265.encode('utf-8') if sys.version_info[0] == 2 else kiter265)
+                oprot.writeString(viter266.encode('utf-8') if sys.version_info[0] == 2 else viter266)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -450,11 +450,11 @@ class ReadUserTimeline_args(object):
             elif fid == 5:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype261, _vtype262, _size260) = iprot.readMapBegin()
-                    for _i264 in range(_size260):
-                        _key265 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val266 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key265] = _val266
+                    (_ktype268, _vtype269, _size267) = iprot.readMapBegin()
+                    for _i271 in range(_size267):
+                        _key272 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val273 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key272] = _val273
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -487,9 +487,9 @@ class ReadUserTimeline_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 5)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter267, viter268 in self.carrier.items():
-                oprot.writeString(kiter267.encode('utf-8') if sys.version_info[0] == 2 else kiter267)
-                oprot.writeString(viter268.encode('utf-8') if sys.version_info[0] == 2 else viter268)
+            for kiter274, viter275 in self.carrier.items():
+                oprot.writeString(kiter274.encode('utf-8') if sys.version_info[0] == 2 else kiter274)
+                oprot.writeString(viter275.encode('utf-8') if sys.version_info[0] == 2 else viter275)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -544,11 +544,11 @@ class ReadUserTimeline_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype272, _size269) = iprot.readListBegin()
-                    for _i273 in range(_size269):
-                        _elem274 = Post()
-                        _elem274.read(iprot)
-                        self.success.append(_elem274)
+                    (_etype279, _size276) = iprot.readListBegin()
+                    for _i280 in range(_size276):
+                        _elem281 = Post()
+                        _elem281.read(iprot)
+                        self.success.append(_elem281)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -570,8 +570,8 @@ class ReadUserTimeline_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
-            for iter275 in self.success:
-                iter275.write(oprot)
+            for iter282 in self.success:
+                iter282.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:

@@ -78,17 +78,17 @@ uint32_t UserService_RegisterUser_args::read(::apache::thrift::protocol::TProtoc
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size67;
-            ::apache::thrift::protocol::TType _ktype68;
-            ::apache::thrift::protocol::TType _vtype69;
-            xfer += iprot->readMapBegin(_ktype68, _vtype69, _size67);
-            uint32_t _i71;
-            for (_i71 = 0; _i71 < _size67; ++_i71)
+            uint32_t _size74;
+            ::apache::thrift::protocol::TType _ktype75;
+            ::apache::thrift::protocol::TType _vtype76;
+            xfer += iprot->readMapBegin(_ktype75, _vtype76, _size74);
+            uint32_t _i78;
+            for (_i78 = 0; _i78 < _size74; ++_i78)
             {
-              std::string _key72;
-              xfer += iprot->readString(_key72);
-              std::string& _val73 = this->carrier[_key72];
-              xfer += iprot->readString(_val73);
+              std::string _key79;
+              xfer += iprot->readString(_key79);
+              std::string& _val80 = this->carrier[_key79];
+              xfer += iprot->readString(_val80);
             }
             xfer += iprot->readMapEnd();
           }
@@ -137,11 +137,11 @@ uint32_t UserService_RegisterUser_args::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 6);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter74;
-    for (_iter74 = this->carrier.begin(); _iter74 != this->carrier.end(); ++_iter74)
+    std::map<std::string, std::string> ::const_iterator _iter81;
+    for (_iter81 = this->carrier.begin(); _iter81 != this->carrier.end(); ++_iter81)
     {
-      xfer += oprot->writeString(_iter74->first);
-      xfer += oprot->writeString(_iter74->second);
+      xfer += oprot->writeString(_iter81->first);
+      xfer += oprot->writeString(_iter81->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -185,11 +185,11 @@ uint32_t UserService_RegisterUser_pargs::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 6);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter75;
-    for (_iter75 = (*(this->carrier)).begin(); _iter75 != (*(this->carrier)).end(); ++_iter75)
+    std::map<std::string, std::string> ::const_iterator _iter82;
+    for (_iter82 = (*(this->carrier)).begin(); _iter82 != (*(this->carrier)).end(); ++_iter82)
     {
-      xfer += oprot->writeString(_iter75->first);
-      xfer += oprot->writeString(_iter75->second);
+      xfer += oprot->writeString(_iter82->first);
+      xfer += oprot->writeString(_iter82->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -386,17 +386,17 @@ uint32_t UserService_RegisterUserWithId_args::read(::apache::thrift::protocol::T
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size76;
-            ::apache::thrift::protocol::TType _ktype77;
-            ::apache::thrift::protocol::TType _vtype78;
-            xfer += iprot->readMapBegin(_ktype77, _vtype78, _size76);
-            uint32_t _i80;
-            for (_i80 = 0; _i80 < _size76; ++_i80)
+            uint32_t _size83;
+            ::apache::thrift::protocol::TType _ktype84;
+            ::apache::thrift::protocol::TType _vtype85;
+            xfer += iprot->readMapBegin(_ktype84, _vtype85, _size83);
+            uint32_t _i87;
+            for (_i87 = 0; _i87 < _size83; ++_i87)
             {
-              std::string _key81;
-              xfer += iprot->readString(_key81);
-              std::string& _val82 = this->carrier[_key81];
-              xfer += iprot->readString(_val82);
+              std::string _key88;
+              xfer += iprot->readString(_key88);
+              std::string& _val89 = this->carrier[_key88];
+              xfer += iprot->readString(_val89);
             }
             xfer += iprot->readMapEnd();
           }
@@ -449,11 +449,11 @@ uint32_t UserService_RegisterUserWithId_args::write(::apache::thrift::protocol::
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 7);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter83;
-    for (_iter83 = this->carrier.begin(); _iter83 != this->carrier.end(); ++_iter83)
+    std::map<std::string, std::string> ::const_iterator _iter90;
+    for (_iter90 = this->carrier.begin(); _iter90 != this->carrier.end(); ++_iter90)
     {
-      xfer += oprot->writeString(_iter83->first);
-      xfer += oprot->writeString(_iter83->second);
+      xfer += oprot->writeString(_iter90->first);
+      xfer += oprot->writeString(_iter90->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -501,11 +501,11 @@ uint32_t UserService_RegisterUserWithId_pargs::write(::apache::thrift::protocol:
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 7);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter84;
-    for (_iter84 = (*(this->carrier)).begin(); _iter84 != (*(this->carrier)).end(); ++_iter84)
+    std::map<std::string, std::string> ::const_iterator _iter91;
+    for (_iter91 = (*(this->carrier)).begin(); _iter91 != (*(this->carrier)).end(); ++_iter91)
     {
-      xfer += oprot->writeString(_iter84->first);
-      xfer += oprot->writeString(_iter84->second);
+      xfer += oprot->writeString(_iter91->first);
+      xfer += oprot->writeString(_iter91->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -678,17 +678,17 @@ uint32_t UserService_Login_args::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size85;
-            ::apache::thrift::protocol::TType _ktype86;
-            ::apache::thrift::protocol::TType _vtype87;
-            xfer += iprot->readMapBegin(_ktype86, _vtype87, _size85);
-            uint32_t _i89;
-            for (_i89 = 0; _i89 < _size85; ++_i89)
+            uint32_t _size92;
+            ::apache::thrift::protocol::TType _ktype93;
+            ::apache::thrift::protocol::TType _vtype94;
+            xfer += iprot->readMapBegin(_ktype93, _vtype94, _size92);
+            uint32_t _i96;
+            for (_i96 = 0; _i96 < _size92; ++_i96)
             {
-              std::string _key90;
-              xfer += iprot->readString(_key90);
-              std::string& _val91 = this->carrier[_key90];
-              xfer += iprot->readString(_val91);
+              std::string _key97;
+              xfer += iprot->readString(_key97);
+              std::string& _val98 = this->carrier[_key97];
+              xfer += iprot->readString(_val98);
             }
             xfer += iprot->readMapEnd();
           }
@@ -729,11 +729,11 @@ uint32_t UserService_Login_args::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter92;
-    for (_iter92 = this->carrier.begin(); _iter92 != this->carrier.end(); ++_iter92)
+    std::map<std::string, std::string> ::const_iterator _iter99;
+    for (_iter99 = this->carrier.begin(); _iter99 != this->carrier.end(); ++_iter99)
     {
-      xfer += oprot->writeString(_iter92->first);
-      xfer += oprot->writeString(_iter92->second);
+      xfer += oprot->writeString(_iter99->first);
+      xfer += oprot->writeString(_iter99->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -769,11 +769,11 @@ uint32_t UserService_Login_pargs::write(::apache::thrift::protocol::TProtocol* o
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter93;
-    for (_iter93 = (*(this->carrier)).begin(); _iter93 != (*(this->carrier)).end(); ++_iter93)
+    std::map<std::string, std::string> ::const_iterator _iter100;
+    for (_iter100 = (*(this->carrier)).begin(); _iter100 != (*(this->carrier)).end(); ++_iter100)
     {
-      xfer += oprot->writeString(_iter93->first);
-      xfer += oprot->writeString(_iter93->second);
+      xfer += oprot->writeString(_iter100->first);
+      xfer += oprot->writeString(_iter100->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -966,17 +966,17 @@ uint32_t UserService_ComposeCreatorWithUserId_args::read(::apache::thrift::proto
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size94;
-            ::apache::thrift::protocol::TType _ktype95;
-            ::apache::thrift::protocol::TType _vtype96;
-            xfer += iprot->readMapBegin(_ktype95, _vtype96, _size94);
-            uint32_t _i98;
-            for (_i98 = 0; _i98 < _size94; ++_i98)
+            uint32_t _size101;
+            ::apache::thrift::protocol::TType _ktype102;
+            ::apache::thrift::protocol::TType _vtype103;
+            xfer += iprot->readMapBegin(_ktype102, _vtype103, _size101);
+            uint32_t _i105;
+            for (_i105 = 0; _i105 < _size101; ++_i105)
             {
-              std::string _key99;
-              xfer += iprot->readString(_key99);
-              std::string& _val100 = this->carrier[_key99];
-              xfer += iprot->readString(_val100);
+              std::string _key106;
+              xfer += iprot->readString(_key106);
+              std::string& _val107 = this->carrier[_key106];
+              xfer += iprot->readString(_val107);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1017,11 +1017,11 @@ uint32_t UserService_ComposeCreatorWithUserId_args::write(::apache::thrift::prot
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter101;
-    for (_iter101 = this->carrier.begin(); _iter101 != this->carrier.end(); ++_iter101)
+    std::map<std::string, std::string> ::const_iterator _iter108;
+    for (_iter108 = this->carrier.begin(); _iter108 != this->carrier.end(); ++_iter108)
     {
-      xfer += oprot->writeString(_iter101->first);
-      xfer += oprot->writeString(_iter101->second);
+      xfer += oprot->writeString(_iter108->first);
+      xfer += oprot->writeString(_iter108->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1057,11 +1057,11 @@ uint32_t UserService_ComposeCreatorWithUserId_pargs::write(::apache::thrift::pro
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter102;
-    for (_iter102 = (*(this->carrier)).begin(); _iter102 != (*(this->carrier)).end(); ++_iter102)
+    std::map<std::string, std::string> ::const_iterator _iter109;
+    for (_iter109 = (*(this->carrier)).begin(); _iter109 != (*(this->carrier)).end(); ++_iter109)
     {
-      xfer += oprot->writeString(_iter102->first);
-      xfer += oprot->writeString(_iter102->second);
+      xfer += oprot->writeString(_iter109->first);
+      xfer += oprot->writeString(_iter109->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1246,17 +1246,17 @@ uint32_t UserService_ComposeCreatorWithUsername_args::read(::apache::thrift::pro
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size103;
-            ::apache::thrift::protocol::TType _ktype104;
-            ::apache::thrift::protocol::TType _vtype105;
-            xfer += iprot->readMapBegin(_ktype104, _vtype105, _size103);
-            uint32_t _i107;
-            for (_i107 = 0; _i107 < _size103; ++_i107)
+            uint32_t _size110;
+            ::apache::thrift::protocol::TType _ktype111;
+            ::apache::thrift::protocol::TType _vtype112;
+            xfer += iprot->readMapBegin(_ktype111, _vtype112, _size110);
+            uint32_t _i114;
+            for (_i114 = 0; _i114 < _size110; ++_i114)
             {
-              std::string _key108;
-              xfer += iprot->readString(_key108);
-              std::string& _val109 = this->carrier[_key108];
-              xfer += iprot->readString(_val109);
+              std::string _key115;
+              xfer += iprot->readString(_key115);
+              std::string& _val116 = this->carrier[_key115];
+              xfer += iprot->readString(_val116);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1293,11 +1293,11 @@ uint32_t UserService_ComposeCreatorWithUsername_args::write(::apache::thrift::pr
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter110;
-    for (_iter110 = this->carrier.begin(); _iter110 != this->carrier.end(); ++_iter110)
+    std::map<std::string, std::string> ::const_iterator _iter117;
+    for (_iter117 = this->carrier.begin(); _iter117 != this->carrier.end(); ++_iter117)
     {
-      xfer += oprot->writeString(_iter110->first);
-      xfer += oprot->writeString(_iter110->second);
+      xfer += oprot->writeString(_iter117->first);
+      xfer += oprot->writeString(_iter117->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1329,11 +1329,11 @@ uint32_t UserService_ComposeCreatorWithUsername_pargs::write(::apache::thrift::p
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter111;
-    for (_iter111 = (*(this->carrier)).begin(); _iter111 != (*(this->carrier)).end(); ++_iter111)
+    std::map<std::string, std::string> ::const_iterator _iter118;
+    for (_iter118 = (*(this->carrier)).begin(); _iter118 != (*(this->carrier)).end(); ++_iter118)
     {
-      xfer += oprot->writeString(_iter111->first);
-      xfer += oprot->writeString(_iter111->second);
+      xfer += oprot->writeString(_iter118->first);
+      xfer += oprot->writeString(_iter118->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1518,17 +1518,17 @@ uint32_t UserService_GetUserId_args::read(::apache::thrift::protocol::TProtocol*
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size112;
-            ::apache::thrift::protocol::TType _ktype113;
-            ::apache::thrift::protocol::TType _vtype114;
-            xfer += iprot->readMapBegin(_ktype113, _vtype114, _size112);
-            uint32_t _i116;
-            for (_i116 = 0; _i116 < _size112; ++_i116)
+            uint32_t _size119;
+            ::apache::thrift::protocol::TType _ktype120;
+            ::apache::thrift::protocol::TType _vtype121;
+            xfer += iprot->readMapBegin(_ktype120, _vtype121, _size119);
+            uint32_t _i123;
+            for (_i123 = 0; _i123 < _size119; ++_i123)
             {
-              std::string _key117;
-              xfer += iprot->readString(_key117);
-              std::string& _val118 = this->carrier[_key117];
-              xfer += iprot->readString(_val118);
+              std::string _key124;
+              xfer += iprot->readString(_key124);
+              std::string& _val125 = this->carrier[_key124];
+              xfer += iprot->readString(_val125);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1565,11 +1565,11 @@ uint32_t UserService_GetUserId_args::write(::apache::thrift::protocol::TProtocol
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter119;
-    for (_iter119 = this->carrier.begin(); _iter119 != this->carrier.end(); ++_iter119)
+    std::map<std::string, std::string> ::const_iterator _iter126;
+    for (_iter126 = this->carrier.begin(); _iter126 != this->carrier.end(); ++_iter126)
     {
-      xfer += oprot->writeString(_iter119->first);
-      xfer += oprot->writeString(_iter119->second);
+      xfer += oprot->writeString(_iter126->first);
+      xfer += oprot->writeString(_iter126->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1601,11 +1601,11 @@ uint32_t UserService_GetUserId_pargs::write(::apache::thrift::protocol::TProtoco
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter120;
-    for (_iter120 = (*(this->carrier)).begin(); _iter120 != (*(this->carrier)).end(); ++_iter120)
+    std::map<std::string, std::string> ::const_iterator _iter127;
+    for (_iter127 = (*(this->carrier)).begin(); _iter127 != (*(this->carrier)).end(); ++_iter127)
     {
-      xfer += oprot->writeString(_iter120->first);
-      xfer += oprot->writeString(_iter120->second);
+      xfer += oprot->writeString(_iter127->first);
+      xfer += oprot->writeString(_iter127->second);
     }
     xfer += oprot->writeMapEnd();
   }

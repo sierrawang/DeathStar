@@ -202,20 +202,20 @@ class ComposePost_args(object):
             elif fid == 5:
                 if ftype == TType.LIST:
                     self.media_ids = []
-                    (_etype158, _size155) = iprot.readListBegin()
-                    for _i159 in range(_size155):
-                        _elem160 = iprot.readI64()
-                        self.media_ids.append(_elem160)
+                    (_etype165, _size162) = iprot.readListBegin()
+                    for _i166 in range(_size162):
+                        _elem167 = iprot.readI64()
+                        self.media_ids.append(_elem167)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 6:
                 if ftype == TType.LIST:
                     self.media_types = []
-                    (_etype164, _size161) = iprot.readListBegin()
-                    for _i165 in range(_size161):
-                        _elem166 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.media_types.append(_elem166)
+                    (_etype171, _size168) = iprot.readListBegin()
+                    for _i172 in range(_size168):
+                        _elem173 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.media_types.append(_elem173)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -227,11 +227,11 @@ class ComposePost_args(object):
             elif fid == 8:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype168, _vtype169, _size167) = iprot.readMapBegin()
-                    for _i171 in range(_size167):
-                        _key172 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val173 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key172] = _val173
+                    (_ktype175, _vtype176, _size174) = iprot.readMapBegin()
+                    for _i178 in range(_size174):
+                        _key179 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val180 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key179] = _val180
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -264,15 +264,15 @@ class ComposePost_args(object):
         if self.media_ids is not None:
             oprot.writeFieldBegin('media_ids', TType.LIST, 5)
             oprot.writeListBegin(TType.I64, len(self.media_ids))
-            for iter174 in self.media_ids:
-                oprot.writeI64(iter174)
+            for iter181 in self.media_ids:
+                oprot.writeI64(iter181)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.media_types is not None:
             oprot.writeFieldBegin('media_types', TType.LIST, 6)
             oprot.writeListBegin(TType.STRING, len(self.media_types))
-            for iter175 in self.media_types:
-                oprot.writeString(iter175.encode('utf-8') if sys.version_info[0] == 2 else iter175)
+            for iter182 in self.media_types:
+                oprot.writeString(iter182.encode('utf-8') if sys.version_info[0] == 2 else iter182)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.post_type is not None:
@@ -282,9 +282,9 @@ class ComposePost_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 8)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter176, viter177 in self.carrier.items():
-                oprot.writeString(kiter176.encode('utf-8') if sys.version_info[0] == 2 else kiter176)
-                oprot.writeString(viter177.encode('utf-8') if sys.version_info[0] == 2 else viter177)
+            for kiter183, viter184 in self.carrier.items():
+                oprot.writeString(kiter183.encode('utf-8') if sys.version_info[0] == 2 else kiter183)
+                oprot.writeString(viter184.encode('utf-8') if sys.version_info[0] == 2 else viter184)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()

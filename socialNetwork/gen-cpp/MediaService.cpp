@@ -46,14 +46,14 @@ uint32_t MediaService_ComposeMedia_args::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->media_types.clear();
-            uint32_t _size477;
-            ::apache::thrift::protocol::TType _etype480;
-            xfer += iprot->readListBegin(_etype480, _size477);
-            this->media_types.resize(_size477);
-            uint32_t _i481;
-            for (_i481 = 0; _i481 < _size477; ++_i481)
+            uint32_t _size484;
+            ::apache::thrift::protocol::TType _etype487;
+            xfer += iprot->readListBegin(_etype487, _size484);
+            this->media_types.resize(_size484);
+            uint32_t _i488;
+            for (_i488 = 0; _i488 < _size484; ++_i488)
             {
-              xfer += iprot->readString(this->media_types[_i481]);
+              xfer += iprot->readString(this->media_types[_i488]);
             }
             xfer += iprot->readListEnd();
           }
@@ -66,14 +66,14 @@ uint32_t MediaService_ComposeMedia_args::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->media_ids.clear();
-            uint32_t _size482;
-            ::apache::thrift::protocol::TType _etype485;
-            xfer += iprot->readListBegin(_etype485, _size482);
-            this->media_ids.resize(_size482);
-            uint32_t _i486;
-            for (_i486 = 0; _i486 < _size482; ++_i486)
+            uint32_t _size489;
+            ::apache::thrift::protocol::TType _etype492;
+            xfer += iprot->readListBegin(_etype492, _size489);
+            this->media_ids.resize(_size489);
+            uint32_t _i493;
+            for (_i493 = 0; _i493 < _size489; ++_i493)
             {
-              xfer += iprot->readI64(this->media_ids[_i486]);
+              xfer += iprot->readI64(this->media_ids[_i493]);
             }
             xfer += iprot->readListEnd();
           }
@@ -86,17 +86,17 @@ uint32_t MediaService_ComposeMedia_args::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size487;
-            ::apache::thrift::protocol::TType _ktype488;
-            ::apache::thrift::protocol::TType _vtype489;
-            xfer += iprot->readMapBegin(_ktype488, _vtype489, _size487);
-            uint32_t _i491;
-            for (_i491 = 0; _i491 < _size487; ++_i491)
+            uint32_t _size494;
+            ::apache::thrift::protocol::TType _ktype495;
+            ::apache::thrift::protocol::TType _vtype496;
+            xfer += iprot->readMapBegin(_ktype495, _vtype496, _size494);
+            uint32_t _i498;
+            for (_i498 = 0; _i498 < _size494; ++_i498)
             {
-              std::string _key492;
-              xfer += iprot->readString(_key492);
-              std::string& _val493 = this->carrier[_key492];
-              xfer += iprot->readString(_val493);
+              std::string _key499;
+              xfer += iprot->readString(_key499);
+              std::string& _val500 = this->carrier[_key499];
+              xfer += iprot->readString(_val500);
             }
             xfer += iprot->readMapEnd();
           }
@@ -129,10 +129,10 @@ uint32_t MediaService_ComposeMedia_args::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("media_types", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->media_types.size()));
-    std::vector<std::string> ::const_iterator _iter494;
-    for (_iter494 = this->media_types.begin(); _iter494 != this->media_types.end(); ++_iter494)
+    std::vector<std::string> ::const_iterator _iter501;
+    for (_iter501 = this->media_types.begin(); _iter501 != this->media_types.end(); ++_iter501)
     {
-      xfer += oprot->writeString((*_iter494));
+      xfer += oprot->writeString((*_iter501));
     }
     xfer += oprot->writeListEnd();
   }
@@ -141,10 +141,10 @@ uint32_t MediaService_ComposeMedia_args::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("media_ids", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->media_ids.size()));
-    std::vector<int64_t> ::const_iterator _iter495;
-    for (_iter495 = this->media_ids.begin(); _iter495 != this->media_ids.end(); ++_iter495)
+    std::vector<int64_t> ::const_iterator _iter502;
+    for (_iter502 = this->media_ids.begin(); _iter502 != this->media_ids.end(); ++_iter502)
     {
-      xfer += oprot->writeI64((*_iter495));
+      xfer += oprot->writeI64((*_iter502));
     }
     xfer += oprot->writeListEnd();
   }
@@ -153,11 +153,11 @@ uint32_t MediaService_ComposeMedia_args::write(::apache::thrift::protocol::TProt
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter496;
-    for (_iter496 = this->carrier.begin(); _iter496 != this->carrier.end(); ++_iter496)
+    std::map<std::string, std::string> ::const_iterator _iter503;
+    for (_iter503 = this->carrier.begin(); _iter503 != this->carrier.end(); ++_iter503)
     {
-      xfer += oprot->writeString(_iter496->first);
-      xfer += oprot->writeString(_iter496->second);
+      xfer += oprot->writeString(_iter503->first);
+      xfer += oprot->writeString(_iter503->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -185,10 +185,10 @@ uint32_t MediaService_ComposeMedia_pargs::write(::apache::thrift::protocol::TPro
   xfer += oprot->writeFieldBegin("media_types", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->media_types)).size()));
-    std::vector<std::string> ::const_iterator _iter497;
-    for (_iter497 = (*(this->media_types)).begin(); _iter497 != (*(this->media_types)).end(); ++_iter497)
+    std::vector<std::string> ::const_iterator _iter504;
+    for (_iter504 = (*(this->media_types)).begin(); _iter504 != (*(this->media_types)).end(); ++_iter504)
     {
-      xfer += oprot->writeString((*_iter497));
+      xfer += oprot->writeString((*_iter504));
     }
     xfer += oprot->writeListEnd();
   }
@@ -197,10 +197,10 @@ uint32_t MediaService_ComposeMedia_pargs::write(::apache::thrift::protocol::TPro
   xfer += oprot->writeFieldBegin("media_ids", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>((*(this->media_ids)).size()));
-    std::vector<int64_t> ::const_iterator _iter498;
-    for (_iter498 = (*(this->media_ids)).begin(); _iter498 != (*(this->media_ids)).end(); ++_iter498)
+    std::vector<int64_t> ::const_iterator _iter505;
+    for (_iter505 = (*(this->media_ids)).begin(); _iter505 != (*(this->media_ids)).end(); ++_iter505)
     {
-      xfer += oprot->writeI64((*_iter498));
+      xfer += oprot->writeI64((*_iter505));
     }
     xfer += oprot->writeListEnd();
   }
@@ -209,11 +209,11 @@ uint32_t MediaService_ComposeMedia_pargs::write(::apache::thrift::protocol::TPro
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 4);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter499;
-    for (_iter499 = (*(this->carrier)).begin(); _iter499 != (*(this->carrier)).end(); ++_iter499)
+    std::map<std::string, std::string> ::const_iterator _iter506;
+    for (_iter506 = (*(this->carrier)).begin(); _iter506 != (*(this->carrier)).end(); ++_iter506)
     {
-      xfer += oprot->writeString(_iter499->first);
-      xfer += oprot->writeString(_iter499->second);
+      xfer += oprot->writeString(_iter506->first);
+      xfer += oprot->writeString(_iter506->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -254,14 +254,14 @@ uint32_t MediaService_ComposeMedia_result::read(::apache::thrift::protocol::TPro
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size500;
-            ::apache::thrift::protocol::TType _etype503;
-            xfer += iprot->readListBegin(_etype503, _size500);
-            this->success.resize(_size500);
-            uint32_t _i504;
-            for (_i504 = 0; _i504 < _size500; ++_i504)
+            uint32_t _size507;
+            ::apache::thrift::protocol::TType _etype510;
+            xfer += iprot->readListBegin(_etype510, _size507);
+            this->success.resize(_size507);
+            uint32_t _i511;
+            for (_i511 = 0; _i511 < _size507; ++_i511)
             {
-              xfer += this->success[_i504].read(iprot);
+              xfer += this->success[_i511].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -300,10 +300,10 @@ uint32_t MediaService_ComposeMedia_result::write(::apache::thrift::protocol::TPr
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<Media> ::const_iterator _iter505;
-      for (_iter505 = this->success.begin(); _iter505 != this->success.end(); ++_iter505)
+      std::vector<Media> ::const_iterator _iter512;
+      for (_iter512 = this->success.begin(); _iter512 != this->success.end(); ++_iter512)
       {
-        xfer += (*_iter505).write(oprot);
+        xfer += (*_iter512).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -348,14 +348,14 @@ uint32_t MediaService_ComposeMedia_presult::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size506;
-            ::apache::thrift::protocol::TType _etype509;
-            xfer += iprot->readListBegin(_etype509, _size506);
-            (*(this->success)).resize(_size506);
-            uint32_t _i510;
-            for (_i510 = 0; _i510 < _size506; ++_i510)
+            uint32_t _size513;
+            ::apache::thrift::protocol::TType _etype516;
+            xfer += iprot->readListBegin(_etype516, _size513);
+            (*(this->success)).resize(_size513);
+            uint32_t _i517;
+            for (_i517 = 0; _i517 < _size513; ++_i517)
             {
-              xfer += (*(this->success))[_i510].read(iprot);
+              xfer += (*(this->success))[_i517].read(iprot);
             }
             xfer += iprot->readListEnd();
           }

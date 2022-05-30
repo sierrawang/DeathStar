@@ -54,17 +54,17 @@ uint32_t TextService_ComposeText_args::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->carrier.clear();
-            uint32_t _size58;
-            ::apache::thrift::protocol::TType _ktype59;
-            ::apache::thrift::protocol::TType _vtype60;
-            xfer += iprot->readMapBegin(_ktype59, _vtype60, _size58);
-            uint32_t _i62;
-            for (_i62 = 0; _i62 < _size58; ++_i62)
+            uint32_t _size65;
+            ::apache::thrift::protocol::TType _ktype66;
+            ::apache::thrift::protocol::TType _vtype67;
+            xfer += iprot->readMapBegin(_ktype66, _vtype67, _size65);
+            uint32_t _i69;
+            for (_i69 = 0; _i69 < _size65; ++_i69)
             {
-              std::string _key63;
-              xfer += iprot->readString(_key63);
-              std::string& _val64 = this->carrier[_key63];
-              xfer += iprot->readString(_val64);
+              std::string _key70;
+              xfer += iprot->readString(_key70);
+              std::string& _val71 = this->carrier[_key70];
+              xfer += iprot->readString(_val71);
             }
             xfer += iprot->readMapEnd();
           }
@@ -101,11 +101,11 @@ uint32_t TextService_ComposeText_args::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->carrier.size()));
-    std::map<std::string, std::string> ::const_iterator _iter65;
-    for (_iter65 = this->carrier.begin(); _iter65 != this->carrier.end(); ++_iter65)
+    std::map<std::string, std::string> ::const_iterator _iter72;
+    for (_iter72 = this->carrier.begin(); _iter72 != this->carrier.end(); ++_iter72)
     {
-      xfer += oprot->writeString(_iter65->first);
-      xfer += oprot->writeString(_iter65->second);
+      xfer += oprot->writeString(_iter72->first);
+      xfer += oprot->writeString(_iter72->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -137,11 +137,11 @@ uint32_t TextService_ComposeText_pargs::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeFieldBegin("carrier", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->carrier)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter66;
-    for (_iter66 = (*(this->carrier)).begin(); _iter66 != (*(this->carrier)).end(); ++_iter66)
+    std::map<std::string, std::string> ::const_iterator _iter73;
+    for (_iter73 = (*(this->carrier)).begin(); _iter73 != (*(this->carrier)).end(); ++_iter73)
     {
-      xfer += oprot->writeString(_iter66->first);
-      xfer += oprot->writeString(_iter66->second);
+      xfer += oprot->writeString(_iter73->first);
+      xfer += oprot->writeString(_iter73->second);
     }
     xfer += oprot->writeMapEnd();
   }

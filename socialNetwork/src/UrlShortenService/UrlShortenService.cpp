@@ -39,6 +39,18 @@ int main(int argc, char* argv[]) {
   }
   int port = config_json["url-shorten-service"]["port"];
 
+  int url_shorten_storage_port = config_json["url-shorten-storage-service"]["port"];
+  std::string url_shorten_storage_addr = config_json["url-shorten-storage-service"]["addr"];
+  int url_shorten_storage_conns = config_json["url-shorten-storage-service"]["connections"];
+  int url_shorten_storage_timeout = config_json["url-shorten-storage-service"]["timeout_ms"];
+  int url_shorten_storage_keepalive =
+      config_json["url-shorten-storage-service"]["keepalive_ms"];
+
+  ClientPool<ThriftClient<UrlShortenStorageServiceClient>> url_shorten_storage_client_pool(
+      "url-shorten-storage-client", url_shorten_storage_addr, url_shorten_storage_port, 0,
+      url_shorten_storage_conns, url_shorten_storage_timeout, url_shorten_storage_keepalive,
+      config_json);
+
   // int mongodb_conns = config_json["url-shorten-mongodb"]["connections"];
   // int mongodb_timeout = config_json["url-shorten-mongodb"]["timeout_ms"];
 
@@ -74,7 +86,7 @@ int main(int argc, char* argv[]) {
       std::make_shared<UrlShortenServiceProcessor>(
           // std::make_shared<UrlShortenHandler>(
           //     memcached_client_pool, mongodb_client_pool, &thread_lock)),
-          std::make_shared<UrlShortenHandler>(&thread_lock)),
+          std::make_shared<UrlShortenHandler>(&thread_lock, &url_shorten_storage_client_pool)),
       server_socket,
       std::make_shared<TFramedTransportFactory>(),
       std::make_shared<TBinaryProtocolFactory>());

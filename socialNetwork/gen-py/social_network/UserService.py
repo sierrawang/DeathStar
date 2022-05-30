@@ -588,11 +588,11 @@ class RegisterUser_args(object):
             elif fid == 6:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype54, _vtype55, _size53) = iprot.readMapBegin()
-                    for _i57 in range(_size53):
-                        _key58 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val59 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key58] = _val59
+                    (_ktype61, _vtype62, _size60) = iprot.readMapBegin()
+                    for _i64 in range(_size60):
+                        _key65 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val66 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key65] = _val66
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -629,9 +629,9 @@ class RegisterUser_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 6)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter60, viter61 in self.carrier.items():
-                oprot.writeString(kiter60.encode('utf-8') if sys.version_info[0] == 2 else kiter60)
-                oprot.writeString(viter61.encode('utf-8') if sys.version_info[0] == 2 else viter61)
+            for kiter67, viter68 in self.carrier.items():
+                oprot.writeString(kiter67.encode('utf-8') if sys.version_info[0] == 2 else kiter67)
+                oprot.writeString(viter68.encode('utf-8') if sys.version_info[0] == 2 else viter68)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -789,11 +789,11 @@ class RegisterUserWithId_args(object):
             elif fid == 7:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype63, _vtype64, _size62) = iprot.readMapBegin()
-                    for _i66 in range(_size62):
-                        _key67 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val68 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key67] = _val68
+                    (_ktype70, _vtype71, _size69) = iprot.readMapBegin()
+                    for _i73 in range(_size69):
+                        _key74 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val75 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key74] = _val75
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -834,9 +834,9 @@ class RegisterUserWithId_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 7)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter69, viter70 in self.carrier.items():
-                oprot.writeString(kiter69.encode('utf-8') if sys.version_info[0] == 2 else kiter69)
-                oprot.writeString(viter70.encode('utf-8') if sys.version_info[0] == 2 else viter70)
+            for kiter76, viter77 in self.carrier.items():
+                oprot.writeString(kiter76.encode('utf-8') if sys.version_info[0] == 2 else kiter76)
+                oprot.writeString(viter77.encode('utf-8') if sys.version_info[0] == 2 else viter77)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -974,11 +974,11 @@ class Login_args(object):
             elif fid == 4:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype72, _vtype73, _size71) = iprot.readMapBegin()
-                    for _i75 in range(_size71):
-                        _key76 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val77 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key76] = _val77
+                    (_ktype79, _vtype80, _size78) = iprot.readMapBegin()
+                    for _i82 in range(_size78):
+                        _key83 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val84 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key83] = _val84
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -1007,9 +1007,9 @@ class Login_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 4)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter78, viter79 in self.carrier.items():
-                oprot.writeString(kiter78.encode('utf-8') if sys.version_info[0] == 2 else kiter78)
-                oprot.writeString(viter79.encode('utf-8') if sys.version_info[0] == 2 else viter79)
+            for kiter85, viter86 in self.carrier.items():
+                oprot.writeString(kiter85.encode('utf-8') if sys.version_info[0] == 2 else kiter85)
+                oprot.writeString(viter86.encode('utf-8') if sys.version_info[0] == 2 else viter86)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1155,11 +1155,11 @@ class ComposeCreatorWithUserId_args(object):
             elif fid == 4:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype81, _vtype82, _size80) = iprot.readMapBegin()
-                    for _i84 in range(_size80):
-                        _key85 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val86 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key85] = _val86
+                    (_ktype88, _vtype89, _size87) = iprot.readMapBegin()
+                    for _i91 in range(_size87):
+                        _key92 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val93 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key92] = _val93
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -1188,9 +1188,9 @@ class ComposeCreatorWithUserId_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 4)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter87, viter88 in self.carrier.items():
-                oprot.writeString(kiter87.encode('utf-8') if sys.version_info[0] == 2 else kiter87)
-                oprot.writeString(viter88.encode('utf-8') if sys.version_info[0] == 2 else viter88)
+            for kiter94, viter95 in self.carrier.items():
+                oprot.writeString(kiter94.encode('utf-8') if sys.version_info[0] == 2 else kiter94)
+                oprot.writeString(viter95.encode('utf-8') if sys.version_info[0] == 2 else viter95)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1330,11 +1330,11 @@ class ComposeCreatorWithUsername_args(object):
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype90, _vtype91, _size89) = iprot.readMapBegin()
-                    for _i93 in range(_size89):
-                        _key94 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val95 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key94] = _val95
+                    (_ktype97, _vtype98, _size96) = iprot.readMapBegin()
+                    for _i100 in range(_size96):
+                        _key101 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val102 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key101] = _val102
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -1359,9 +1359,9 @@ class ComposeCreatorWithUsername_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter96, viter97 in self.carrier.items():
-                oprot.writeString(kiter96.encode('utf-8') if sys.version_info[0] == 2 else kiter96)
-                oprot.writeString(viter97.encode('utf-8') if sys.version_info[0] == 2 else viter97)
+            for kiter103, viter104 in self.carrier.items():
+                oprot.writeString(kiter103.encode('utf-8') if sys.version_info[0] == 2 else kiter103)
+                oprot.writeString(viter104.encode('utf-8') if sys.version_info[0] == 2 else viter104)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1500,11 +1500,11 @@ class GetUserId_args(object):
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype99, _vtype100, _size98) = iprot.readMapBegin()
-                    for _i102 in range(_size98):
-                        _key103 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val104 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key103] = _val104
+                    (_ktype106, _vtype107, _size105) = iprot.readMapBegin()
+                    for _i109 in range(_size105):
+                        _key110 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val111 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key110] = _val111
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -1529,9 +1529,9 @@ class GetUserId_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter105, viter106 in self.carrier.items():
-                oprot.writeString(kiter105.encode('utf-8') if sys.version_info[0] == 2 else kiter105)
-                oprot.writeString(viter106.encode('utf-8') if sys.version_info[0] == 2 else viter106)
+            for kiter112, viter113 in self.carrier.items():
+                oprot.writeString(kiter112.encode('utf-8') if sys.version_info[0] == 2 else kiter112)
+                oprot.writeString(viter113.encode('utf-8') if sys.version_info[0] == 2 else viter113)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()

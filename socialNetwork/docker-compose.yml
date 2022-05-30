@@ -195,6 +195,16 @@ services:
     volumes:
       - ./config:/social-network-microservices/config
 
+  url-shorten-storage-service:
+    image: yg397/social-network-microservices:latest
+    hostname: url-shorten-storage-service
+    ports:
+      - 10014:9090
+    restart: always
+    entrypoint: UrlShortenStorageService
+    volumes:
+      - ./config:/social-network-microservices/config
+
   media-service:
     image: yg397/social-network-microservices:latest
     hostname: media-service

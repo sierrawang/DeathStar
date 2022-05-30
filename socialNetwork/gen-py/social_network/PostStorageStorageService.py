@@ -318,11 +318,11 @@ class StorePost_args(object):
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype108, _vtype109, _size107) = iprot.readMapBegin()
-                    for _i111 in range(_size107):
-                        _key112 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val113 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key112] = _val113
+                    (_ktype115, _vtype116, _size114) = iprot.readMapBegin()
+                    for _i118 in range(_size114):
+                        _key119 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val120 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key119] = _val120
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -347,9 +347,9 @@ class StorePost_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter114, viter115 in self.carrier.items():
-                oprot.writeString(kiter114.encode('utf-8') if sys.version_info[0] == 2 else kiter114)
-                oprot.writeString(viter115.encode('utf-8') if sys.version_info[0] == 2 else viter115)
+            for kiter121, viter122 in self.carrier.items():
+                oprot.writeString(kiter121.encode('utf-8') if sys.version_info[0] == 2 else kiter121)
+                oprot.writeString(viter122.encode('utf-8') if sys.version_info[0] == 2 else viter122)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -476,11 +476,11 @@ class ReadPost_args(object):
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype117, _vtype118, _size116) = iprot.readMapBegin()
-                    for _i120 in range(_size116):
-                        _key121 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val122 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key121] = _val122
+                    (_ktype124, _vtype125, _size123) = iprot.readMapBegin()
+                    for _i127 in range(_size123):
+                        _key128 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val129 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key128] = _val129
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -505,9 +505,9 @@ class ReadPost_args(object):
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter123, viter124 in self.carrier.items():
-                oprot.writeString(kiter123.encode('utf-8') if sys.version_info[0] == 2 else kiter123)
-                oprot.writeString(viter124.encode('utf-8') if sys.version_info[0] == 2 else viter124)
+            for kiter130, viter131 in self.carrier.items():
+                oprot.writeString(kiter130.encode('utf-8') if sys.version_info[0] == 2 else kiter130)
+                oprot.writeString(viter131.encode('utf-8') if sys.version_info[0] == 2 else viter131)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -641,21 +641,21 @@ class ReadPosts_args(object):
             elif fid == 2:
                 if ftype == TType.LIST:
                     self.post_ids = []
-                    (_etype128, _size125) = iprot.readListBegin()
-                    for _i129 in range(_size125):
-                        _elem130 = iprot.readI64()
-                        self.post_ids.append(_elem130)
+                    (_etype135, _size132) = iprot.readListBegin()
+                    for _i136 in range(_size132):
+                        _elem137 = iprot.readI64()
+                        self.post_ids.append(_elem137)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.MAP:
                     self.carrier = {}
-                    (_ktype132, _vtype133, _size131) = iprot.readMapBegin()
-                    for _i135 in range(_size131):
-                        _key136 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        _val137 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
-                        self.carrier[_key136] = _val137
+                    (_ktype139, _vtype140, _size138) = iprot.readMapBegin()
+                    for _i142 in range(_size138):
+                        _key143 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        _val144 = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                        self.carrier[_key143] = _val144
                     iprot.readMapEnd()
                 else:
                     iprot.skip(ftype)
@@ -676,16 +676,16 @@ class ReadPosts_args(object):
         if self.post_ids is not None:
             oprot.writeFieldBegin('post_ids', TType.LIST, 2)
             oprot.writeListBegin(TType.I64, len(self.post_ids))
-            for iter138 in self.post_ids:
-                oprot.writeI64(iter138)
+            for iter145 in self.post_ids:
+                oprot.writeI64(iter145)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.carrier is not None:
             oprot.writeFieldBegin('carrier', TType.MAP, 3)
             oprot.writeMapBegin(TType.STRING, TType.STRING, len(self.carrier))
-            for kiter139, viter140 in self.carrier.items():
-                oprot.writeString(kiter139.encode('utf-8') if sys.version_info[0] == 2 else kiter139)
-                oprot.writeString(viter140.encode('utf-8') if sys.version_info[0] == 2 else viter140)
+            for kiter146, viter147 in self.carrier.items():
+                oprot.writeString(kiter146.encode('utf-8') if sys.version_info[0] == 2 else kiter146)
+                oprot.writeString(viter147.encode('utf-8') if sys.version_info[0] == 2 else viter147)
             oprot.writeMapEnd()
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -738,11 +738,11 @@ class ReadPosts_result(object):
             if fid == 0:
                 if ftype == TType.LIST:
                     self.success = []
-                    (_etype144, _size141) = iprot.readListBegin()
-                    for _i145 in range(_size141):
-                        _elem146 = Post()
-                        _elem146.read(iprot)
-                        self.success.append(_elem146)
+                    (_etype151, _size148) = iprot.readListBegin()
+                    for _i152 in range(_size148):
+                        _elem153 = Post()
+                        _elem153.read(iprot)
+                        self.success.append(_elem153)
                     iprot.readListEnd()
                 else:
                     iprot.skip(ftype)
@@ -764,8 +764,8 @@ class ReadPosts_result(object):
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.LIST, 0)
             oprot.writeListBegin(TType.STRUCT, len(self.success))
-            for iter147 in self.success:
-                iter147.write(oprot)
+            for iter154 in self.success:
+                iter154.write(oprot)
             oprot.writeListEnd()
             oprot.writeFieldEnd()
         if self.se is not None:
